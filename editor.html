@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前线简报 · 编辑器</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Serif+SC:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root {
+  --ink: #0d0d0d; --paper: #f5f0e8; --paper-dark: #ede7d9;
+  --red: #c0392b; --gold: #b8860b; --gray: #5a5a5a;
+  --divider: #c8bfaa; --green: #1a6b3a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #1a1a1a; color: #e8e0d0;
+  font-family: 'Noto Serif SC', serif;
+  min-height: 100vh; padding: 0;
+}
+.top-bar {
+  background: #0d0d0d; border-bottom: 1px solid #333;
+  padding: 12px 32px; display: flex; align-items: center;
+  justify-content: space-between; position: sticky; top: 0; z-index: 100;
+}
+.top-bar .brand {
+  font-family: 'Playfair Display', serif; font-size: 20px; color: #f5f0e8;
+}
+.top-bar .brand span { color: #c0392b; }
+.top-bar .actions { display: flex; gap: 12px; align-items: center; }
+.btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  letter-spacing: 0.08em; padding: 8px 20px; cursor: pointer;
+  border: 1px solid; transition: all 0.2s;
+}
+.btn-primary {
+  background: #c0392b; color: white; border-color: #c0392b;
+}
+.btn-primary:hover { background: #a93226; }
+.btn-secondary {
+  background: transparent; color: #e8e0d0; border-color: #555;
+}
+.btn-secondary:hover { border-color: #e8e0d0; }
+.btn-preview {
+  background: transparent; color: #b8860b; border-color: #b8860b;
+}
+.btn-preview:hover { background: #b8860b22; }
+
+.editor-layout {
+  display: grid; grid-template-columns: 340px 1fr;
+  min-height: calc(100vh - 53px);
+}
+
+/* LEFT PANEL */
+.left-panel {
+  background: #141414; border-right: 1px solid #2a2a2a;
+  padding: 24px; overflow-y: auto; height: calc(100vh - 53px);
+  position: sticky; top: 53px;
+}
+.panel-title {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  letter-spacing: 0.15em; color: #666; margin-bottom: 20px;
+  padding-bottom: 8px; border-bottom: 1px solid #2a2a2a;
+}
+.field-group { margin-bottom: 20px; }
+.field-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; color: #888; display: block; margin-bottom: 6px;
+}
+.field-required { color: #c0392b; }
+input[type="text"], input[type="date"], input[type="password"], select {
+  width: 100%; background: #1e1e1e; border: 1px solid #333;
+  color: #e8e0d0; font-family: 'Noto Serif SC', serif; font-size: 13px;
+  padding: 8px 10px; outline: none; transition: border-color 0.2s;
+}
+input:focus, select:focus { border-color: #b8860b; }
+.market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.market-item label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  color: #666; display: block; margin-bottom: 3px;
+}
+
+/* VIX color indicator */
+.vix-indicator { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.vix-dot { width: 8px; height: 8px; border-radius: 50%; background: #1a6b3a; }
+
+/* MISSILE TRACKER */
+.missile-inputs { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
+.missile-day label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  color: #666; display: block; margin-bottom: 3px; text-align: center;
+}
+.missile-day input { text-align: center; }
+
+/* TAG BADGES */
+.section-tag-select { position: relative; }
+select.tag-select {
+  appearance: none; cursor: pointer;
+  padding-right: 24px;
+}
+
+/* STATUS */
+.status-bar {
+  margin-top: 16px; padding: 10px 12px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  border-radius: 2px; display: none;
+}
+.status-bar.success { background: #0d2d1a; color: #4caf7d; border: 1px solid #1a6b3a; display: block; }
+.status-bar.error { background: #2d0d0d; color: #e57373; border: 1px solid #c0392b; display: block; }
+.status-bar.loading { background: #1e1a0d; color: #b8860b; border: 1px solid #b8860b; display: block; }
+
+/* RIGHT PANEL - MAIN EDITOR */
+.right-panel {
+  padding: 32px 40px; overflow-y: auto;
+  height: calc(100vh - 53px);
+}
+.section-editor {
+  background: #141414; border: 1px solid #2a2a2a;
+  margin-bottom: 20px; border-radius: 2px;
+}
+.section-editor-header {
+  background: #1e1e1e; padding: 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid #2a2a2a; cursor: pointer;
+}
+.section-editor-header .s-num {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555;
+}
+.section-editor-header .s-title {
+  font-family: 'Playfair Display', serif; font-size: 14px; color: #e8e0d0;
+  flex: 1;
+}
+.section-editor-header .s-toggle {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #555;
+}
+.section-editor-body { padding: 16px; }
+.section-editor-body.collapsed { display: none; }
+
+textarea {
+  width: 100%; background: #1e1e1e; border: 1px solid #333;
+  color: #e8e0d0; font-family: 'Noto Serif SC', serif; font-size: 13px;
+  padding: 10px 12px; outline: none; resize: vertical;
+  line-height: 1.75; transition: border-color 0.2s; min-height: 80px;
+}
+textarea:focus { border-color: #b8860b; }
+.field-hint {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  color: #555; margin-top: 4px;
+}
+
+/* Items editor */
+.items-editor { }
+.item-row {
+  background: #1a1a1a; border: 1px solid #2a2a2a;
+  padding: 12px; margin-bottom: 10px; border-radius: 2px;
+  border-left: 3px solid #333;
+}
+.item-row.hot { border-left-color: #c0392b; }
+.item-row.positive { border-left-color: #1a6b3a; }
+.item-row.neutral { border-left-color: #b8860b; }
+.item-row-header { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+.item-type-select { width: 90px; font-size: 11px; padding: 4px 6px; }
+.item-title-input { flex: 1; }
+.item-body-input { width: 100%; }
+.add-item-btn {
+  width: 100%; padding: 8px; background: transparent;
+  border: 1px dashed #333; color: #555; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  letter-spacing: 0.08em; transition: all 0.2s; margin-top: 6px;
+}
+.add-item-btn:hover { border-color: #b8860b; color: #b8860b; }
+.remove-item-btn {
+  background: transparent; border: none; color: #555;
+  cursor: pointer; font-size: 14px; padding: 2px 6px;
+  line-height: 1;
+}
+.remove-item-btn:hover { color: #c0392b; }
+
+/* QA Editor */
+.qa-row { margin-bottom: 14px; }
+.qa-row .qa-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555; margin-bottom: 4px;
+}
+
+/* Cal editor */
+.cal-row { display: grid; grid-template-columns: 80px 1fr 60px; gap: 8px; margin-bottom: 8px; align-items: start; }
+.cal-stars-input { font-family: 'IBM Plex Mono', monospace; }
+
+.separator { border: none; border-top: 1px solid #2a2a2a; margin: 16px 0; }
+
+.pill {
+  display: inline-block; font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; padding: 2px 8px; border: 1px solid #333;
+  color: #666; margin: 2px;
+}
+
+@media (max-width: 768px) {
+  .editor-layout { grid-template-columns: 1fr; }
+  .left-panel { position: static; height: auto; }
+  .right-panel { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">前线<span>简报</span> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#555;margin-left:8px;">EDITOR</span></div>
+  <div class="actions">
+    <a href="/" class="btn btn-secondary" style="text-decoration:none;">← 主页</a>
+    <button class="btn btn-preview" onclick="previewBrief()">预览</button>
+    <button class="btn btn-primary" onclick="publishBrief()">发布 →</button>
+  </div>
+</div>
+
+<div class="editor-layout">
+
+  <!-- LEFT: META & MARKET DATA -->
+  <div class="left-panel">
+    <div class="panel-title">── 基础信息 & 市场数据</div>
+
+    <!-- AUTH -->
+    <div class="field-group">
+      <span class="field-label">发布密码 <span class="field-required">*</span></span>
+      <input type="password" id="password" placeholder="frontline2026" value="frontline2026">
+    </div>
+
+    <div class="field-group">
+      <span class="field-label">期号 Vol.</span>
+      <input type="text" id="vol" placeholder="01">
+    </div>
+
+    <div class="field-group">
+      <span class="field-label">日期 <span class="field-required">*</span></span>
+      <input type="date" id="date">
+    </div>
+
+    <div class="field-group">
+      <span class="field-label">副标题（战况标注）</span>
+      <input type="text" id="subtitle" placeholder="中东战争第X日 / 盘前版">
+    </div>
+
+    <div class="separator"></div>
+    <div class="panel-title">── 市场快照</div>
+
+    <div class="market-grid">
+      <div class="market-item">
+        <label>VIX</label>
+        <input type="text" id="vix" placeholder="21.0">
+      </div>
+      <div class="market-item">
+        <label>WTI 原油</label>
+        <input type="text" id="wti" placeholder="$75">
+      </div>
+      <div class="market-item">
+        <label>黄金</label>
+        <input type="text" id="gold" placeholder="$5,167">
+      </div>
+      <div class="market-item">
+        <label>比特币</label>
+        <input type="text" id="btc" placeholder="$71,400">
+      </div>
+      <div class="market-item">
+        <label>VIX 备注</label>
+        <input type="text" id="vix_note" placeholder="峰值回落">
+      </div>
+      <div class="market-item">
+        <label>WTI 备注</label>
+        <input type="text" id="wti_note" placeholder="较峰值回落">
+      </div>
+      <div class="market-item">
+        <label>黄金备注</label>
+        <input type="text" id="gold_note" placeholder="本轮高Beta品种">
+      </div>
+      <div class="market-item">
+        <label>BTC 备注</label>
+        <input type="text" id="btc_note" placeholder="避险叙事强化">
+      </div>
+    </div>
+
+    <div class="separator"></div>
+    <div class="panel-title">── 自建指标 · 导D追踪</div>
+    <div style="margin-bottom:8px;">
+      <span class="field-label">启用此指标</span>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="missile_enabled" checked style="width:auto;">
+        <span style="font-size:12px;color:#888;">显示导D消耗量追踪</span>
+      </label>
+    </div>
+    <div class="missile-inputs">
+      <div class="missile-day">
+        <label>D1</label>
+        <input type="text" id="m1" placeholder="350">
+      </div>
+      <div class="missile-day">
+        <label>D2</label>
+        <input type="text" id="m2" placeholder="175">
+      </div>
+      <div class="missile-day">
+        <label>D3</label>
+        <input type="text" id="m3" placeholder="120">
+      </div>
+      <div class="missile-day">
+        <label>D4</label>
+        <input type="text" id="m4" placeholder="50">
+      </div>
+    </div>
+    <div style="margin-top:8px;">
+      <span class="field-label">追踪备注</span>
+      <textarea id="missile_note" style="min-height:60px;" placeholder="消耗量呈指数级衰减，显示..."></textarea>
+    </div>
+
+    <div id="status" class="status-bar"></div>
+    <div id="published-link" style="display:none;margin-top:12px;">
+      <span class="field-label">发布成功 · 分享链接</span>
+      <div style="background:#0d2d1a;border:1px solid #1a6b3a;padding:10px;margin-top:4px;">
+        <a id="pub-link" href="#" target="_blank" style="color:#4caf7d;font-family:'IBM Plex Mono',monospace;font-size:12px;word-break:break-all;"></a>
+      </div>
+      <button onclick="copyLink()" class="btn btn-secondary" style="margin-top:8px;width:100%;">复制链接</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: CONTENT EDITOR -->
+  <div class="right-panel">
+
+    <!-- HEADLINE -->
+    <div class="section-editor">
+      <div class="section-editor-header" onclick="toggleSection(this)">
+        <span class="s-num">摘要</span>
+        <span class="s-title">核心标题 & 摘要</span>
+        <span class="s-toggle">▾</span>
+      </div>
+      <div class="section-editor-body">
+        <div class="field-group">
+          <span class="field-label">主标题（粗体大字）<span class="field-required">*</span></span>
+          <input type="text" id="headline" placeholder="「和谈假新闻」触发市场拐点信号——AVGO用1000亿AI远景压过一切噪音">
+          <div class="field-hint">显示在列表页和简报顶部</div>
+        </div>
+        <div class="field-group">
+          <span class="field-label">摘要正文 <span class="field-required">*</span></span>
+          <textarea id="summary" style="min-height:140px;" placeholder="盘前，《纽约时报》传出美伊和谈消息...&#10;&#10;支持换行，**粗体**用双星号包裹"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTIONS: AVGO / EARNINGS -->
+    <div class="section-editor" id="sec-earnings">
+      <div class="section-editor-header" onclick="toggleSection(this)">
+        <span class="s-num">01</span>
+        <span class="s-title">重磅财报</span>
+        <span class="s-toggle">▾</span>
+      </div>
+      <div class="section-editor-body">
+        <div class="field-group">
+          <span class="field-label">板块标题</span>
+          <input type="text" id="s1_title" placeholder="重磅财报 · AVGO 验证AI硬件持续性">
+        </div>
+        <div class="field-group">
+          <span class="field-label">财报公司名</span>
+          <input type="text" id="earn_company" placeholder="Broadcom Inc.">
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <input type="text" id="earn_ticker" placeholder="AVGO" style="width:80px;">
+            <input type="text" id="earn_period" placeholder="Q1 FY2026" style="flex:1;">
+            <input type="text" id="earn_afterhours" placeholder="盘后 ▲ +4.75%" style="flex:1;">
+          </div>
+        </div>
+        <div class="field-group">
+          <span class="field-label">关键数据（4格）</span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div>
+              <input type="text" placeholder="指标名：总营收" id="m_l1" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值：$193亿" id="m_v1" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期：+29% YoY" id="m_s1">
+            </div>
+            <div>
+              <input type="text" placeholder="指标名：AI营收" id="m_l2" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值：$84亿" id="m_v2" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期：+106% YoY" id="m_s2">
+            </div>
+            <div>
+              <input type="text" placeholder="指标名：EBITDA利润率" id="m_l3" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值：68%" id="m_v3" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期：预期67%" id="m_s3">
+            </div>
+            <div>
+              <input type="text" placeholder="指标名：Q2营收指引" id="m_l4" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值：$220亿" id="m_v4" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期：预期$204亿" id="m_s4">
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <span class="field-label">财报分析说明</span>
+          <textarea id="earn_note" style="min-height:100px;" placeholder="为何利润率尤为重要：...&#10;&#10;支持**粗体**标记"></textarea>
+        </div>
+        <hr class="separator">
+        <div class="field-group">
+          <span class="field-label">附加条目（如：今日最佳交易逻辑）</span>
+          <div id="s1-items" class="items-editor"></div>
+          <button class="add-item-btn" onclick="addItem('s1-items')">+ 添加条目</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTIONS 2-5: Generic sections -->
+    <div id="generic-sections">
+      <!-- Will be generated dynamically -->
+    </div>
+
+    <!-- Q&A -->
+    <div class="section-editor">
+      <div class="section-editor-header" onclick="toggleSection(this)">
+        <span class="s-num">Q&A</span>
+        <span class="s-title">今日焦点 Q&A（5问5答）</span>
+        <span class="s-toggle">▾</span>
+      </div>
+      <div class="section-editor-body">
+        <div id="qa-container">
+          <!-- generated -->
+        </div>
+        <button class="add-item-btn" onclick="addQA()">+ 添加 Q&A</button>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="section-editor">
+      <div class="section-editor-header" onclick="toggleSection(this)">
+        <span class="s-num">CAL</span>
+        <span class="s-title">本周 & 本月日历</span>
+        <span class="s-toggle">▾</span>
+      </div>
+      <div class="section-editor-body">
+        <span class="field-label" style="margin-bottom:10px;display:block;">── 本周事件</span>
+        <div id="cal-week"></div>
+        <button class="add-item-btn" onclick="addCalItem('cal-week')">+ 添加</button>
+        <hr class="separator">
+        <span class="field-label" style="margin-bottom:10px;display:block;">── 本月事件</span>
+        <div id="cal-month"></div>
+        <button class="add-item-btn" onclick="addCalItem('cal-month')">+ 添加</button>
+      </div>
+    </div>
+
+  </div><!-- end right-panel -->
+</div>
+
+<script>
+// ── INIT ──
+const GENERIC_SECTIONS = [
+  { id: 's2', num: '02', title: '算力生态', defaultTitle: '算力生态 · AI需求侧多点验证' },
+  { id: 's3', num: '03', title: '商业化前沿', defaultTitle: '商业化前沿 · Agentic浪潮加速落地' },
+  { id: 's4', num: '04', title: '宏观与市场结构', defaultTitle: '宏观与市场结构' },
+  { id: 's5', num: '05', title: '地缘政治', defaultTitle: '地缘政治 · 战场与议场' },
+];
+
+window.addEventListener('DOMContentLoaded', () => {
+  // set today's date
+  document.getElementById('date').valueAsDate = new Date();
+
+  // build generic sections
+  const container = document.getElementById('generic-sections');
+  GENERIC_SECTIONS.forEach(s => {
+    container.innerHTML += `
+    <div class="section-editor" id="sec-${s.id}">
+      <div class="section-editor-header" onclick="toggleSection(this)">
+        <span class="s-num">${s.num}</span>
+        <span class="s-title">${s.title}</span>
+        <span class="s-toggle">▾</span>
+      </div>
+      <div class="section-editor-body">
+        <div class="field-group">
+          <span class="field-label">板块标题</span>
+          <input type="text" id="${s.id}_title" placeholder="${s.defaultTitle}">
+        </div>
+        <div id="${s.id}-items" class="items-editor"></div>
+        <button class="add-item-btn" onclick="addItem('${s.id}-items')">+ 添加条目</button>
+      </div>
+    </div>`;
+  });
+
+  // init QAs
+  for (let i = 0; i < 5; i++) addQA();
+  // init cal
+  addCalItem('cal-week'); addCalItem('cal-week'); addCalItem('cal-week');
+  addCalItem('cal-month'); addCalItem('cal-month'); addCalItem('cal-month');
+
+  // init items for s1
+  addItem('s1-items');
+});
+
+// ── TOGGLE ──
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  const toggle = header.querySelector('.s-toggle');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    toggle.textContent = '▾';
+  } else {
+    body.classList.add('collapsed');
+    toggle.textContent = '▸';
+  }
+}
+
+// ── ITEMS ──
+let itemCount = 0;
+function addItem(containerId) {
+  const id = `item_${itemCount++}`;
+  const el = document.createElement('div');
+  el.className = 'item-row hot';
+  el.id = id;
+  el.innerHTML = `
+    <div class="item-row-header">
+      <select class="item-type-select" onchange="updateItemColor(this)">
+        <option value="hot">🔴 重点</option>
+        <option value="positive">🟢 积极</option>
+        <option value="neutral">🟡 观察</option>
+        <option value="dark">⚫ 警示</option>
+      </select>
+      <input type="text" class="item-title-input" placeholder="条目标题（可含 TICKER +5%）">
+      <button class="remove-item-btn" onclick="document.getElementById('${id}').remove()">×</button>
+    </div>
+    <textarea class="item-body-input" placeholder="正文内容...支持**粗体**" style="min-height:64px;"></textarea>
+  `;
+  document.getElementById(containerId).appendChild(el);
+}
+
+function updateItemColor(sel) {
+  const row = sel.closest('.item-row');
+  row.className = `item-row ${sel.value}`;
+}
+
+// ── Q&A ──
+let qaCount = 0;
+function addQA() {
+  const n = ++qaCount;
+  const el = document.createElement('div');
+  el.className = 'qa-row';
+  el.id = `qa_${n}`;
+  el.innerHTML = `
+    <div class="qa-label">Q${n}</div>
+    <input type="text" id="qa_q_${n}" placeholder="问题..." style="margin-bottom:6px;">
+    <textarea id="qa_a_${n}" placeholder="回答..." style="min-height:72px;"></textarea>
+    <button onclick="document.getElementById('qa_${n}').remove()" 
+      style="background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'IBM Plex Mono',monospace;margin-top:4px;">
+      移除
+    </button>
+    <hr class="separator">
+  `;
+  document.getElementById('qa-container').appendChild(el);
+}
+
+// ── CALENDAR ──
+let calCount = 0;
+function addCalItem(containerId) {
+  const n = ++calCount;
+  const el = document.createElement('div');
+  el.className = 'cal-row';
+  el.id = `cal_${n}`;
+  el.innerHTML = `
+    <input type="text" id="cal_date_${n}" placeholder="3/6 周五">
+    <input type="text" id="cal_text_${n}" placeholder="NFP 非农就业数据">
+    <input type="text" id="cal_stars_${n}" placeholder="★★★★★" class="cal-stars-input">
+  `;
+  document.getElementById(containerId).appendChild(el);
+}
+
+// ── COLLECT DATA ──
+function collectData() {
+  const items = (containerId) => {
+    const rows = document.getElementById(containerId)?.querySelectorAll('.item-row') || [];
+    return Array.from(rows).map(row => ({
+      type: row.querySelector('select')?.value || 'hot',
+      title: row.querySelector('.item-title-input')?.value || '',
+      body: row.querySelector('textarea')?.value || '',
+    })).filter(i => i.title || i.body);
+  };
+
+  const qaRows = document.querySelectorAll('.qa-row');
+  const qas = Array.from(qaRows).map(row => {
+    const n = row.id.replace('qa_','');
+    return {
+      q: document.getElementById(`qa_q_${n}`)?.value || '',
+      a: document.getElementById(`qa_a_${n}`)?.value || '',
+    };
+  }).filter(q => q.q);
+
+  const calWeekEls = document.getElementById('cal-week').querySelectorAll('.cal-row');
+  const calMonthEls = document.getElementById('cal-month').querySelectorAll('.cal-row');
+  const getCalItems = (els) => Array.from(els).map(el => {
+    const n = el.id.replace('cal_','');
+    return {
+      date: document.getElementById(`cal_date_${n}`)?.value || '',
+      text: document.getElementById(`cal_text_${n}`)?.value || '',
+      stars: document.getElementById(`cal_stars_${n}`)?.value || '',
+    };
+  }).filter(c => c.text);
+
+  return {
+    vol: document.getElementById('vol').value,
+    date: document.getElementById('date').value,
+    subtitle: document.getElementById('subtitle').value,
+    headline: document.getElementById('headline').value,
+    summary: document.getElementById('summary').value,
+    market: {
+      vix: document.getElementById('vix').value,
+      wti: document.getElementById('wti').value,
+      gold: document.getElementById('gold').value,
+      btc: document.getElementById('btc').value,
+      vix_note: document.getElementById('vix_note').value,
+      wti_note: document.getElementById('wti_note').value,
+      gold_note: document.getElementById('gold_note').value,
+      btc_note: document.getElementById('btc_note').value,
+    },
+    missile: {
+      enabled: document.getElementById('missile_enabled').checked,
+      days: [
+        document.getElementById('m1').value,
+        document.getElementById('m2').value,
+        document.getElementById('m3').value,
+        document.getElementById('m4').value,
+      ],
+      note: document.getElementById('missile_note').value,
+    },
+    sections: [
+      {
+        num: '01', title: document.getElementById('s1_title').value || '重磅财报',
+        type: 'earnings',
+        earnings: {
+          company: document.getElementById('earn_company').value,
+          ticker: document.getElementById('earn_ticker').value,
+          period: document.getElementById('earn_period').value,
+          afterhours: document.getElementById('earn_afterhours').value,
+          metrics: [
+            { label: document.getElementById('m_l1').value, value: document.getElementById('m_v1').value, sub: document.getElementById('m_s1').value },
+            { label: document.getElementById('m_l2').value, value: document.getElementById('m_v2').value, sub: document.getElementById('m_s2').value },
+            { label: document.getElementById('m_l3').value, value: document.getElementById('m_v3').value, sub: document.getElementById('m_s3').value },
+            { label: document.getElementById('m_l4').value, value: document.getElementById('m_v4').value, sub: document.getElementById('m_s4').value },
+          ].filter(m => m.label),
+          note: document.getElementById('earn_note').value,
+        },
+        items: items('s1-items'),
+      },
+      ...GENERIC_SECTIONS.map(s => ({
+        num: s.num, title: document.getElementById(`${s.id}_title`)?.value || s.defaultTitle,
+        type: 'items', items: items(`${s.id}-items`),
+      })),
+    ],
+    qas,
+    cal: { week: getCalItems(calWeekEls), month: getCalItems(calMonthEls) },
+  };
+}
+
+// ── PREVIEW ──
+function previewBrief() {
+  const data = collectData();
+  const id = (data.date || '').replace(/-/g,'') || 'preview';
+  sessionStorage.setItem(`brief_preview_${id}`, JSON.stringify(data));
+  window.open(`/brief/${id}?preview=1`, '_blank');
+}
+
+// ── PUBLISH ──
+async function publishBrief() {
+  const data = collectData();
+  if (!data.date || !data.headline) {
+    showStatus('error', '请填写日期和标题');
+    return;
+  }
+  const password = document.getElementById('password').value;
+  showStatus('loading', '正在发布...');
+
+  try {
+    const res = await fetch('/api/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${password}`,
+      },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || '发布失败');
+
+    const url = `${location.origin}${json.url}`;
+    showStatus('success', `✓ 发布成功`);
+    document.getElementById('published-link').style.display = 'block';
+    document.getElementById('pub-link').href = url;
+    document.getElementById('pub-link').textContent = url;
+  } catch (err) {
+    showStatus('error', `✗ ${err.message}`);
+  }
+}
+
+function showStatus(type, msg) {
+  const el = document.getElementById('status');
+  el.className = `status-bar ${type}`;
+  el.textContent = msg;
+}
+
+function copyLink() {
+  const link = document.getElementById('pub-link').href;
+  navigator.clipboard.writeText(link).then(() => {
+    showStatus('success', '✓ 链接已复制');
+  });
+}
+</script>
+</body>
+</html>
