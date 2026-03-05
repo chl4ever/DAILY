@@ -44,6 +44,10 @@ body {
   background: transparent; color: #b8860b; border-color: #b8860b;
 }
 .btn-preview:hover { background: #b8860b22; }
+.btn-import {
+  background: transparent; color: #7cb8e0; border-color: #7cb8e0;
+}
+.btn-import:hover { background: #7cb8e022; }
 
 .editor-layout {
   display: grid; grid-template-columns: 340px 1fr;
@@ -206,6 +210,7 @@ textarea:focus { border-color: #b8860b; }
   <div class="brand">前线<span>简报</span> <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#555;margin-left:8px;">EDITOR</span></div>
   <div class="actions">
     <a href="/" class="btn btn-secondary" style="text-decoration:none;">← 主页</a>
+    <button class="btn btn-import" onclick="openImport()">📋 导入JSON</button>
     <button class="btn btn-preview" onclick="previewBrief()">预览</button>
     <button class="btn btn-primary" onclick="publishBrief()">发布 →</button>
   </div>
@@ -700,5 +705,158 @@ function copyLink() {
   });
 }
 </script>
+<!-- IMPORT MODAL -->
+<div id="import-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;display:none;align-items:center;justify-content:center;">
+  <div style="background:#141414;border:1px solid #333;width:90%;max-width:680px;padding:28px;position:relative;">
+    <div style="font-family:'Playfair Display',serif;font-size:18px;color:#e8e0d0;margin-bottom:6px;">📋 导入 JSON</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#666;margin-bottom:16px;">粘贴由 Claude 生成的简报 JSON，一键填入所有字段</div>
+    <textarea id="import-json-input" style="width:100%;height:260px;background:#0d0d0d;border:1px solid #333;color:#b8e0b8;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:12px;outline:none;resize:vertical;" placeholder='粘贴 JSON 到这里...'></textarea>
+    <div id="import-error" style="color:#e57373;font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:8px;display:none;"></div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
+      <button onclick="closeImport()" style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 20px;background:transparent;color:#888;border:1px solid #444;cursor:pointer;">取消</button>
+      <button onclick="doImport()" style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 24px;background:#7cb8e0;color:#0d0d0d;border:none;cursor:pointer;font-weight:600;">一键填入 →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openImport() {
+  const m = document.getElementById('import-modal');
+  m.style.display = 'flex';
+  document.getElementById('import-json-input').value = '';
+  document.getElementById('import-error').style.display = 'none';
+}
+function closeImport() {
+  document.getElementById('import-modal').style.display = 'none';
+}
+
+function doImport() {
+  const raw = document.getElementById('import-json-input').value.trim();
+  let d;
+  try {
+    d = JSON.parse(raw);
+  } catch(e) {
+    const errEl = document.getElementById('import-error');
+    errEl.textContent = 'JSON 格式错误：' + e.message;
+    errEl.style.display = 'block';
+    return;
+  }
+  loadData(d);
+  closeImport();
+  showStatus('success', '✓ 导入成功，请检查内容后点发布');
+}
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.value = val || '';
+}
+
+function loadData(d) {
+  // Basic fields
+  setVal('vol', d.vol);
+  setVal('subtitle', d.subtitle);
+  setVal('headline', d.headline);
+  setVal('summary', d.summary);
+  if (d.date) setVal('date', d.date);
+
+  // Market
+  const m = d.market || {};
+  setVal('vix', m.vix); setVal('wti', m.wti);
+  setVal('gold', m.gold); setVal('btc', m.btc);
+  setVal('vix_note', m.vix_note); setVal('wti_note', m.wti_note);
+  setVal('gold_note', m.gold_note); setVal('btc_note', m.btc_note);
+
+  // Missile
+  const ms = d.missile || {};
+  const cb = document.getElementById('missile_enabled');
+  if (cb) cb.checked = ms.enabled !== false;
+  (ms.days || []).forEach((v, i) => setVal(`m${i+1}`, v));
+  setVal('missile_note', ms.note);
+
+  // Section 1 (earnings)
+  const s1 = (d.sections || [])[0] || {};
+  setVal('s1_title', s1.title);
+  const e = s1.earnings || {};
+  setVal('earn_company', e.company); setVal('earn_ticker', e.ticker);
+  setVal('earn_period', e.period); setVal('earn_afterhours', e.afterhours);
+  setVal('earn_note', e.note);
+  (e.metrics || []).forEach((met, i) => {
+    const n = i + 1;
+    setVal(`m_l${n}`, met.label); setVal(`m_v${n}`, met.value); setVal(`m_s${n}`, met.sub);
+  });
+
+  // Clear and reload s1 items
+  loadItems('s1-items', s1.items || []);
+
+  // Generic sections s2-s5
+  const SIDS = ['s2','s3','s4','s5'];
+  SIDS.forEach((sid, idx) => {
+    const sec = (d.sections || [])[idx + 1] || {};
+    setVal(`${sid}_title`, sec.title);
+    loadItems(`${sid}-items`, sec.items || []);
+  });
+
+  // Q&A
+  const qaContainer = document.getElementById('qa-container');
+  qaContainer.innerHTML = '';
+  qaCount = 0;
+  (d.qas || []).forEach(q => {
+    const n = ++qaCount;
+    const el = document.createElement('div');
+    el.className = 'qa-row'; el.id = `qa_${n}`;
+    el.innerHTML = `
+      <div class="qa-label">Q${n}</div>
+      <input type="text" id="qa_q_${n}" style="margin-bottom:6px;" value="${escHtml(q.q || '')}">
+      <textarea id="qa_a_${n}" style="min-height:72px;">${escHtml(q.a || '')}</textarea>
+      <button onclick="document.getElementById('qa_${n}').remove()"
+        style="background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'IBM Plex Mono',monospace;margin-top:4px;">移除</button>
+      <hr class="separator">`;
+    qaContainer.appendChild(el);
+  });
+
+  // Calendar
+  const loadCal = (containerId, items) => {
+    document.getElementById(containerId).innerHTML = '';
+    (items || []).forEach(c => {
+      const n = ++calCount;
+      const el = document.createElement('div');
+      el.className = 'cal-row'; el.id = `cal_${n}`;
+      el.innerHTML = `
+        <input type="text" id="cal_date_${n}" value="${escHtml(c.date||'')}">
+        <input type="text" id="cal_text_${n}" value="${escHtml(c.text||'')}">
+        <input type="text" id="cal_stars_${n}" value="${escHtml(c.stars||'')}" class="cal-stars-input">`;
+      document.getElementById(containerId).appendChild(el);
+    });
+  };
+  loadCal('cal-week', (d.cal || {}).week);
+  loadCal('cal-month', (d.cal || {}).month);
+}
+
+function loadItems(containerId, items) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  items.forEach(item => {
+    const id = `item_${itemCount++}`;
+    const el = document.createElement('div');
+    el.className = `item-row ${item.type || 'hot'}`;
+    el.id = id;
+    const typeMap = { hot:'🔴 重点', positive:'🟢 积极', neutral:'🟡 观察', dark:'⚫ 警示' };
+    const opts = Object.entries(typeMap).map(([v,l]) =>
+      `<option value="${v}"${item.type===v?' selected':''}>${l}</option>`).join('');
+    el.innerHTML = `
+      <div class="item-row-header">
+        <select class="item-type-select" onchange="updateItemColor(this)">${opts}</select>
+        <input type="text" class="item-title-input" value="${escHtml(item.title||'')}">
+        <button class="remove-item-btn" onclick="document.getElementById('${id}').remove()">×</button>
+      </div>
+      <textarea class="item-body-input" style="min-height:64px;">${escHtml(item.body||'')}</textarea>`;
+    container.appendChild(el);
+  });
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
 </body>
-</html>
