@@ -12,152 +12,67 @@
   --divider: #c8bfaa; --green: #1a6b3a;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: #1a1a1a; color: #e8e0d0;
-  font-family: 'Noto Serif SC', serif;
-  min-height: 100vh; padding: 0;
-}
+body { background: #1a1a1a; color: #e8e0d0; font-family: 'Noto Serif SC', serif; min-height: 100vh; }
 .top-bar {
   background: #0d0d0d; border-bottom: 1px solid #333;
   padding: 12px 32px; display: flex; align-items: center;
   justify-content: space-between; position: sticky; top: 0; z-index: 100;
 }
-.top-bar .brand {
-  font-family: 'Playfair Display', serif; font-size: 20px; color: #f5f0e8;
-}
+.top-bar .brand { font-family: 'Playfair Display', serif; font-size: 20px; color: #f5f0e8; }
 .top-bar .brand span { color: #c0392b; }
 .top-bar .actions { display: flex; gap: 12px; align-items: center; }
-.btn {
-  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
-  letter-spacing: 0.08em; padding: 8px 20px; cursor: pointer;
-  border: 1px solid; transition: all 0.2s;
-}
-.btn-primary {
-  background: #c0392b; color: white; border-color: #c0392b;
-}
+.btn { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; padding: 8px 20px; cursor: pointer; border: 1px solid; transition: all 0.2s; }
+.btn-primary { background: #c0392b; color: white; border-color: #c0392b; }
 .btn-primary:hover { background: #a93226; }
-.btn-secondary {
-  background: transparent; color: #e8e0d0; border-color: #555;
-}
+.btn-secondary { background: transparent; color: #e8e0d0; border-color: #555; }
 .btn-secondary:hover { border-color: #e8e0d0; }
-.btn-preview {
-  background: transparent; color: #b8860b; border-color: #b8860b;
-}
+.btn-preview { background: transparent; color: #b8860b; border-color: #b8860b; }
 .btn-preview:hover { background: #b8860b22; }
-.btn-import {
-  background: transparent; color: #7cb8e0; border-color: #7cb8e0;
-}
+.btn-import { background: transparent; color: #7cb8e0; border-color: #7cb8e0; }
 .btn-import:hover { background: #7cb8e022; }
+.btn-download { background: #1a6b3a; color: white; border-color: #1a6b3a; }
+.btn-download:hover { background: #155530; }
 
-.editor-layout {
-  display: grid; grid-template-columns: 340px 1fr;
-  min-height: calc(100vh - 53px);
-}
-
-/* LEFT PANEL */
-.left-panel {
-  background: #141414; border-right: 1px solid #2a2a2a;
-  padding: 24px; overflow-y: auto; height: calc(100vh - 53px);
-  position: sticky; top: 53px;
-}
-.panel-title {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  letter-spacing: 0.15em; color: #666; margin-bottom: 20px;
-  padding-bottom: 8px; border-bottom: 1px solid #2a2a2a;
-}
+.editor-layout { display: grid; grid-template-columns: 340px 1fr; min-height: calc(100vh - 53px); }
+.left-panel { background: #141414; border-right: 1px solid #2a2a2a; padding: 24px; overflow-y: auto; height: calc(100vh - 53px); position: sticky; top: 53px; }
+.panel-title { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #666; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid #2a2a2a; }
 .field-group { margin-bottom: 20px; }
-.field-label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  letter-spacing: 0.1em; color: #888; display: block; margin-bottom: 6px;
-}
+.field-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #888; display: block; margin-bottom: 6px; }
 .field-required { color: #c0392b; }
-input[type="text"], input[type="date"], input[type="password"], select {
-  width: 100%; background: #1e1e1e; border: 1px solid #333;
-  color: #e8e0d0; font-family: 'Noto Serif SC', serif; font-size: 13px;
-  padding: 8px 10px; outline: none; transition: border-color 0.2s;
-}
+input[type="text"], input[type="date"], select { width: 100%; background: #1e1e1e; border: 1px solid #333; color: #e8e0d0; font-family: 'Noto Serif SC', serif; font-size: 13px; padding: 8px 10px; outline: none; transition: border-color 0.2s; }
 input:focus, select:focus { border-color: #b8860b; }
 .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.market-item label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  color: #666; display: block; margin-bottom: 3px;
-}
-
-/* VIX color indicator */
-.vix-indicator { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-.vix-dot { width: 8px; height: 8px; border-radius: 50%; background: #1a6b3a; }
-
-/* MISSILE TRACKER */
+.market-item label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #666; display: block; margin-bottom: 3px; }
 .missile-inputs { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; }
-.missile-day label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
-  color: #666; display: block; margin-bottom: 3px; text-align: center;
-}
+.missile-day label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #666; display: block; margin-bottom: 3px; text-align: center; }
 .missile-day input { text-align: center; }
-
-/* TAG BADGES */
-.section-tag-select { position: relative; }
-select.tag-select {
-  appearance: none; cursor: pointer;
-  padding-right: 24px;
-}
-
-/* STATUS */
-.status-bar {
-  margin-top: 16px; padding: 10px 12px;
-  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-  border-radius: 2px; display: none;
-}
+.status-bar { margin-top: 16px; padding: 10px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; border-radius: 2px; display: none; }
 .status-bar.success { background: #0d2d1a; color: #4caf7d; border: 1px solid #1a6b3a; display: block; }
 .status-bar.error { background: #2d0d0d; color: #e57373; border: 1px solid #c0392b; display: block; }
 .status-bar.loading { background: #1e1a0d; color: #b8860b; border: 1px solid #b8860b; display: block; }
 
-/* RIGHT PANEL - MAIN EDITOR */
-.right-panel {
-  padding: 32px 40px; overflow-y: auto;
-  height: calc(100vh - 53px);
+/* 下载说明框 */
+.download-guide {
+  background: #0d2010; border: 1px solid #1a6b3a; padding: 14px;
+  margin-top: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  color: #4caf7d; line-height: 1.8; display: none;
 }
-.section-editor {
-  background: #141414; border: 1px solid #2a2a2a;
-  margin-bottom: 20px; border-radius: 2px;
-}
-.section-editor-header {
-  background: #1e1e1e; padding: 10px 16px;
-  display: flex; align-items: center; gap: 12px;
-  border-bottom: 1px solid #2a2a2a; cursor: pointer;
-}
-.section-editor-header .s-num {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555;
-}
-.section-editor-header .s-title {
-  font-family: 'Playfair Display', serif; font-size: 14px; color: #e8e0d0;
-  flex: 1;
-}
-.section-editor-header .s-toggle {
-  font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #555;
-}
+.download-guide .step { color: #888; }
+.download-guide .highlight { color: #b8e0b8; font-weight: 600; }
+
+.right-panel { padding: 32px 40px; overflow-y: auto; height: calc(100vh - 53px); }
+.section-editor { background: #141414; border: 1px solid #2a2a2a; margin-bottom: 20px; border-radius: 2px; }
+.section-editor-header { background: #1e1e1e; padding: 10px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #2a2a2a; cursor: pointer; }
+.section-editor-header .s-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555; }
+.section-editor-header .s-title { font-family: 'Playfair Display', serif; font-size: 14px; color: #e8e0d0; flex: 1; }
+.section-editor-header .s-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #555; }
 .section-editor-body { padding: 16px; }
 .section-editor-body.collapsed { display: none; }
-
-textarea {
-  width: 100%; background: #1e1e1e; border: 1px solid #333;
-  color: #e8e0d0; font-family: 'Noto Serif SC', serif; font-size: 13px;
-  padding: 10px 12px; outline: none; resize: vertical;
-  line-height: 1.75; transition: border-color 0.2s; min-height: 80px;
-}
+textarea { width: 100%; background: #1e1e1e; border: 1px solid #333; color: #e8e0d0; font-family: 'Noto Serif SC', serif; font-size: 13px; padding: 10px 12px; outline: none; resize: vertical; line-height: 1.75; transition: border-color 0.2s; min-height: 80px; }
 textarea:focus { border-color: #b8860b; }
-.field-hint {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-  color: #555; margin-top: 4px;
-}
-
-/* Items editor */
-.items-editor { }
-.item-row {
-  background: #1a1a1a; border: 1px solid #2a2a2a;
-  padding: 12px; margin-bottom: 10px; border-radius: 2px;
-  border-left: 3px solid #333;
-}
+.field-hint { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555; margin-top: 4px; }
+.items-editor {}
+.item-row { background: #1a1a1a; border: 1px solid #2a2a2a; padding: 12px; margin-bottom: 10px; border-radius: 2px; border-left: 3px solid #333; }
 .item-row.hot { border-left-color: #c0392b; }
 .item-row.positive { border-left-color: #1a6b3a; }
 .item-row.neutral { border-left-color: #b8860b; }
@@ -165,38 +80,14 @@ textarea:focus { border-color: #b8860b; }
 .item-type-select { width: 90px; font-size: 11px; padding: 4px 6px; }
 .item-title-input { flex: 1; }
 .item-body-input { width: 100%; }
-.add-item-btn {
-  width: 100%; padding: 8px; background: transparent;
-  border: 1px dashed #333; color: #555; cursor: pointer;
-  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-  letter-spacing: 0.08em; transition: all 0.2s; margin-top: 6px;
-}
+.add-item-btn { width: 100%; padding: 8px; background: transparent; border: 1px dashed #333; color: #555; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; transition: all 0.2s; margin-top: 6px; }
 .add-item-btn:hover { border-color: #b8860b; color: #b8860b; }
-.remove-item-btn {
-  background: transparent; border: none; color: #555;
-  cursor: pointer; font-size: 14px; padding: 2px 6px;
-  line-height: 1;
-}
+.remove-item-btn { background: transparent; border: none; color: #555; cursor: pointer; font-size: 14px; padding: 2px 6px; }
 .remove-item-btn:hover { color: #c0392b; }
-
-/* QA Editor */
 .qa-row { margin-bottom: 14px; }
-.qa-row .qa-label {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555; margin-bottom: 4px;
-}
-
-/* Cal editor */
+.qa-row .qa-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #555; margin-bottom: 4px; }
 .cal-row { display: grid; grid-template-columns: 80px 1fr 60px; gap: 8px; margin-bottom: 8px; align-items: start; }
-.cal-stars-input { font-family: 'IBM Plex Mono', monospace; }
-
 .separator { border: none; border-top: 1px solid #2a2a2a; margin: 16px 0; }
-
-.pill {
-  display: inline-block; font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; padding: 2px 8px; border: 1px solid #333;
-  color: #666; margin: 2px;
-}
-
 @media (max-width: 768px) {
   .editor-layout { grid-template-columns: 1fr; }
   .left-panel { position: static; height: auto; }
@@ -212,32 +103,22 @@ textarea:focus { border-color: #b8860b; }
     <a href="/" class="btn btn-secondary" style="text-decoration:none;">← 主页</a>
     <button class="btn btn-import" onclick="openImport()">📋 导入JSON</button>
     <button class="btn btn-preview" onclick="previewBrief()">预览</button>
-    <button class="btn btn-primary" onclick="publishBrief()">发布 →</button>
+    <button class="btn btn-download" onclick="generateAndDownload()">⬇ 生成 HTML</button>
   </div>
 </div>
 
 <div class="editor-layout">
-
-  <!-- LEFT: META & MARKET DATA -->
   <div class="left-panel">
     <div class="panel-title">── 基础信息 & 市场数据</div>
 
-    <!-- AUTH -->
-    <div class="field-group">
-      <span class="field-label">发布密码 <span class="field-required">*</span></span>
-      <input type="password" id="password" placeholder="frontline2026" value="frontline2026">
-    </div>
-
     <div class="field-group">
       <span class="field-label">期号 Vol.</span>
-      <input type="text" id="vol" placeholder="01">
+      <input type="text" id="vol" placeholder="02">
     </div>
-
     <div class="field-group">
       <span class="field-label">日期 <span class="field-required">*</span></span>
       <input type="date" id="date">
     </div>
-
     <div class="field-group">
       <span class="field-label">副标题（战况标注）</span>
       <input type="text" id="subtitle" placeholder="中东战争第X日 / 盘前版">
@@ -245,124 +126,79 @@ textarea:focus { border-color: #b8860b; }
 
     <div class="separator"></div>
     <div class="panel-title">── 市场快照</div>
-
     <div class="market-grid">
-      <div class="market-item">
-        <label>VIX</label>
-        <input type="text" id="vix" placeholder="21.0">
-      </div>
-      <div class="market-item">
-        <label>WTI 原油</label>
-        <input type="text" id="wti" placeholder="$75">
-      </div>
-      <div class="market-item">
-        <label>黄金</label>
-        <input type="text" id="gold" placeholder="$5,167">
-      </div>
-      <div class="market-item">
-        <label>比特币</label>
-        <input type="text" id="btc" placeholder="$71,400">
-      </div>
-      <div class="market-item">
-        <label>VIX 备注</label>
-        <input type="text" id="vix_note" placeholder="峰值回落">
-      </div>
-      <div class="market-item">
-        <label>WTI 备注</label>
-        <input type="text" id="wti_note" placeholder="较峰值回落">
-      </div>
-      <div class="market-item">
-        <label>黄金备注</label>
-        <input type="text" id="gold_note" placeholder="本轮高Beta品种">
-      </div>
-      <div class="market-item">
-        <label>BTC 备注</label>
-        <input type="text" id="btc_note" placeholder="避险叙事强化">
-      </div>
+      <div class="market-item"><label>VIX</label><input type="text" id="vix" placeholder="21.0"></div>
+      <div class="market-item"><label>WTI 原油</label><input type="text" id="wti" placeholder="$75"></div>
+      <div class="market-item"><label>黄金</label><input type="text" id="gold" placeholder="$5,167"></div>
+      <div class="market-item"><label>比特币</label><input type="text" id="btc" placeholder="$71,400"></div>
+      <div class="market-item"><label>VIX 备注</label><input type="text" id="vix_note" placeholder="峰值回落"></div>
+      <div class="market-item"><label>WTI 备注</label><input type="text" id="wti_note" placeholder="较峰值回落"></div>
+      <div class="market-item"><label>黄金备注</label><input type="text" id="gold_note" placeholder="本轮高Beta品种"></div>
+      <div class="market-item"><label>BTC 备注</label><input type="text" id="btc_note" placeholder="避险叙事强化"></div>
     </div>
 
     <div class="separator"></div>
     <div class="panel-title">── 自建指标 · 导D追踪</div>
     <div style="margin-bottom:8px;">
-      <span class="field-label">启用此指标</span>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
         <input type="checkbox" id="missile_enabled" checked style="width:auto;">
         <span style="font-size:12px;color:#888;">显示导D消耗量追踪</span>
       </label>
     </div>
     <div class="missile-inputs">
-      <div class="missile-day">
-        <label>D1</label>
-        <input type="text" id="m1" placeholder="350">
-      </div>
-      <div class="missile-day">
-        <label>D2</label>
-        <input type="text" id="m2" placeholder="175">
-      </div>
-      <div class="missile-day">
-        <label>D3</label>
-        <input type="text" id="m3" placeholder="120">
-      </div>
-      <div class="missile-day">
-        <label>D4</label>
-        <input type="text" id="m4" placeholder="50">
-      </div>
+      <div class="missile-day"><label>D1</label><input type="text" id="m1" placeholder="350"></div>
+      <div class="missile-day"><label>D2</label><input type="text" id="m2" placeholder="175"></div>
+      <div class="missile-day"><label>D3</label><input type="text" id="m3" placeholder="120"></div>
+      <div class="missile-day"><label>D4</label><input type="text" id="m4" placeholder="50"></div>
     </div>
     <div style="margin-top:8px;">
       <span class="field-label">追踪备注</span>
-      <textarea id="missile_note" style="min-height:60px;" placeholder="消耗量呈指数级衰减，显示..."></textarea>
+      <textarea id="missile_note" style="min-height:60px;" placeholder="消耗量呈指数级衰减..."></textarea>
     </div>
 
     <div id="status" class="status-bar"></div>
-    <div id="published-link" style="display:none;margin-top:12px;">
-      <span class="field-label">发布成功 · 分享链接</span>
-      <div style="background:#0d2d1a;border:1px solid #1a6b3a;padding:10px;margin-top:4px;">
-        <a id="pub-link" href="#" target="_blank" style="color:#4caf7d;font-family:'IBM Plex Mono',monospace;font-size:12px;word-break:break-all;"></a>
-      </div>
-      <button onclick="copyLink()" class="btn btn-secondary" style="margin-top:8px;width:100%;">复制链接</button>
+
+    <div class="download-guide" id="download-guide">
+      <div>✓ <span class="highlight" id="dl-filename">brief-vol02.html</span> 已下载</div>
+      <div style="margin-top:10px;color:#666;">── 接下来三步：</div>
+      <div class="step">1. 上传到 GitHub 仓库根目录</div>
+      <div class="step">2. 在 <span class="highlight">index.html</span> 加一行链接</div>
+      <div class="step">3. Vercel 自动部署，完成</div>
     </div>
   </div>
 
-  <!-- RIGHT: CONTENT EDITOR -->
   <div class="right-panel">
-
-    <!-- HEADLINE -->
     <div class="section-editor">
       <div class="section-editor-header" onclick="toggleSection(this)">
-        <span class="s-num">摘要</span>
-        <span class="s-title">核心标题 & 摘要</span>
-        <span class="s-toggle">▾</span>
+        <span class="s-num">摘要</span><span class="s-title">核心标题 & 摘要</span><span class="s-toggle">▾</span>
       </div>
       <div class="section-editor-body">
         <div class="field-group">
-          <span class="field-label">主标题（粗体大字）<span class="field-required">*</span></span>
-          <input type="text" id="headline" placeholder="「和谈假新闻」触发市场拐点信号——AVGO用1000亿AI远景压过一切噪音">
+          <span class="field-label">主标题 <span class="field-required">*</span></span>
+          <input type="text" id="headline" placeholder="今日核心标题...">
           <div class="field-hint">显示在列表页和简报顶部</div>
         </div>
         <div class="field-group">
           <span class="field-label">摘要正文 <span class="field-required">*</span></span>
-          <textarea id="summary" style="min-height:140px;" placeholder="盘前，《纽约时报》传出美伊和谈消息...&#10;&#10;支持换行，**粗体**用双星号包裹"></textarea>
+          <textarea id="summary" style="min-height:140px;" placeholder="支持换行，**粗体**用双星号包裹"></textarea>
         </div>
       </div>
     </div>
 
-    <!-- SECTIONS: AVGO / EARNINGS -->
     <div class="section-editor" id="sec-earnings">
       <div class="section-editor-header" onclick="toggleSection(this)">
-        <span class="s-num">01</span>
-        <span class="s-title">重磅财报</span>
-        <span class="s-toggle">▾</span>
+        <span class="s-num">01</span><span class="s-title">重磅财报</span><span class="s-toggle">▾</span>
       </div>
       <div class="section-editor-body">
         <div class="field-group">
           <span class="field-label">板块标题</span>
-          <input type="text" id="s1_title" placeholder="重磅财报 · AVGO 验证AI硬件持续性">
+          <input type="text" id="s1_title" placeholder="重磅财报 · ...">
         </div>
         <div class="field-group">
           <span class="field-label">财报公司名</span>
-          <input type="text" id="earn_company" placeholder="Broadcom Inc.">
+          <input type="text" id="earn_company" placeholder="公司全名">
           <div style="display:flex;gap:8px;margin-top:6px;">
-            <input type="text" id="earn_ticker" placeholder="AVGO" style="width:80px;">
+            <input type="text" id="earn_ticker" placeholder="TICKER" style="width:80px;">
             <input type="text" id="earn_period" placeholder="Q1 FY2026" style="flex:1;">
             <input type="text" id="earn_afterhours" placeholder="盘后 ▲ +4.75%" style="flex:1;">
           </div>
@@ -371,66 +207,55 @@ textarea:focus { border-color: #b8860b; }
           <span class="field-label">关键数据（4格）</span>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
             <div>
-              <input type="text" placeholder="指标名：总营收" id="m_l1" style="margin-bottom:4px;">
-              <input type="text" placeholder="数值：$193亿" id="m_v1" style="margin-bottom:4px;">
-              <input type="text" placeholder="vs预期：+29% YoY" id="m_s1">
+              <input type="text" placeholder="指标名" id="m_l1" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值" id="m_v1" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期" id="m_s1">
             </div>
             <div>
-              <input type="text" placeholder="指标名：AI营收" id="m_l2" style="margin-bottom:4px;">
-              <input type="text" placeholder="数值：$84亿" id="m_v2" style="margin-bottom:4px;">
-              <input type="text" placeholder="vs预期：+106% YoY" id="m_s2">
+              <input type="text" placeholder="指标名" id="m_l2" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值" id="m_v2" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期" id="m_s2">
             </div>
             <div>
-              <input type="text" placeholder="指标名：EBITDA利润率" id="m_l3" style="margin-bottom:4px;">
-              <input type="text" placeholder="数值：68%" id="m_v3" style="margin-bottom:4px;">
-              <input type="text" placeholder="vs预期：预期67%" id="m_s3">
+              <input type="text" placeholder="指标名" id="m_l3" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值" id="m_v3" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期" id="m_s3">
             </div>
             <div>
-              <input type="text" placeholder="指标名：Q2营收指引" id="m_l4" style="margin-bottom:4px;">
-              <input type="text" placeholder="数值：$220亿" id="m_v4" style="margin-bottom:4px;">
-              <input type="text" placeholder="vs预期：预期$204亿" id="m_s4">
+              <input type="text" placeholder="指标名" id="m_l4" style="margin-bottom:4px;">
+              <input type="text" placeholder="数值" id="m_v4" style="margin-bottom:4px;">
+              <input type="text" placeholder="vs预期" id="m_s4">
             </div>
           </div>
         </div>
         <div class="field-group">
           <span class="field-label">财报分析说明</span>
-          <textarea id="earn_note" style="min-height:100px;" placeholder="为何利润率尤为重要：...&#10;&#10;支持**粗体**标记"></textarea>
+          <textarea id="earn_note" style="min-height:100px;" placeholder="支持**粗体**标记"></textarea>
         </div>
         <hr class="separator">
         <div class="field-group">
-          <span class="field-label">附加条目（如：今日最佳交易逻辑）</span>
+          <span class="field-label">附加条目</span>
           <div id="s1-items" class="items-editor"></div>
           <button class="add-item-btn" onclick="addItem('s1-items')">+ 添加条目</button>
         </div>
       </div>
     </div>
 
-    <!-- SECTIONS 2-5: Generic sections -->
-    <div id="generic-sections">
-      <!-- Will be generated dynamically -->
-    </div>
+    <div id="generic-sections"></div>
 
-    <!-- Q&A -->
     <div class="section-editor">
       <div class="section-editor-header" onclick="toggleSection(this)">
-        <span class="s-num">Q&A</span>
-        <span class="s-title">今日焦点 Q&A（5问5答）</span>
-        <span class="s-toggle">▾</span>
+        <span class="s-num">Q&A</span><span class="s-title">今日焦点 Q&A</span><span class="s-toggle">▾</span>
       </div>
       <div class="section-editor-body">
-        <div id="qa-container">
-          <!-- generated -->
-        </div>
+        <div id="qa-container"></div>
         <button class="add-item-btn" onclick="addQA()">+ 添加 Q&A</button>
       </div>
     </div>
 
-    <!-- CALENDAR -->
     <div class="section-editor">
       <div class="section-editor-header" onclick="toggleSection(this)">
-        <span class="s-num">CAL</span>
-        <span class="s-title">本周 & 本月日历</span>
-        <span class="s-toggle">▾</span>
+        <span class="s-num">CAL</span><span class="s-title">本周 & 本月日历</span><span class="s-toggle">▾</span>
       </div>
       <div class="section-editor-body">
         <span class="field-label" style="margin-bottom:10px;display:block;">── 本周事件</span>
@@ -442,32 +267,38 @@ textarea:focus { border-color: #b8860b; }
         <button class="add-item-btn" onclick="addCalItem('cal-month')">+ 添加</button>
       </div>
     </div>
+  </div>
+</div>
 
-  </div><!-- end right-panel -->
+<!-- IMPORT MODAL -->
+<div id="import-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#141414;border:1px solid #333;width:90%;max-width:680px;padding:28px;">
+    <div style="font-family:'Playfair Display',serif;font-size:18px;color:#e8e0d0;margin-bottom:6px;">📋 导入 JSON</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#666;margin-bottom:16px;">粘贴由 Claude 生成的简报 JSON，一键填入所有字段</div>
+    <textarea id="import-json-input" style="width:100%;height:260px;background:#0d0d0d;border:1px solid #333;color:#b8e0b8;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:12px;outline:none;resize:vertical;" placeholder="粘贴 JSON 到这里..."></textarea>
+    <div id="import-error" style="color:#e57373;font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:8px;display:none;"></div>
+    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
+      <button onclick="closeImport()" style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 20px;background:transparent;color:#888;border:1px solid #444;cursor:pointer;">取消</button>
+      <button onclick="doImport()" style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 24px;background:#7cb8e0;color:#0d0d0d;border:none;cursor:pointer;font-weight:600;">一键填入 →</button>
+    </div>
+  </div>
 </div>
 
 <script>
-// ── INIT ──
 const GENERIC_SECTIONS = [
-  { id: 's2', num: '02', title: '算力生态', defaultTitle: '算力生态 · AI需求侧多点验证' },
-  { id: 's3', num: '03', title: '商业化前沿', defaultTitle: '商业化前沿 · Agentic浪潮加速落地' },
-  { id: 's4', num: '04', title: '宏观与市场结构', defaultTitle: '宏观与市场结构' },
-  { id: 's5', num: '05', title: '地缘政治', defaultTitle: '地缘政治 · 战场与议场' },
+  { id:'s2', num:'02', title:'算力生态', defaultTitle:'算力生态 · AI需求侧多点验证' },
+  { id:'s3', num:'03', title:'商业化前沿', defaultTitle:'商业化前沿 · Agentic浪潮加速落地' },
+  { id:'s4', num:'04', title:'宏观与市场结构', defaultTitle:'宏观与市场结构' },
+  { id:'s5', num:'05', title:'地缘政治', defaultTitle:'地缘政治 · 战场与议场' },
 ];
 
 window.addEventListener('DOMContentLoaded', () => {
-  // set today's date
   document.getElementById('date').valueAsDate = new Date();
-
-  // build generic sections
   const container = document.getElementById('generic-sections');
   GENERIC_SECTIONS.forEach(s => {
-    container.innerHTML += `
-    <div class="section-editor" id="sec-${s.id}">
+    container.innerHTML += `<div class="section-editor" id="sec-${s.id}">
       <div class="section-editor-header" onclick="toggleSection(this)">
-        <span class="s-num">${s.num}</span>
-        <span class="s-title">${s.title}</span>
-        <span class="s-toggle">▾</span>
+        <span class="s-num">${s.num}</span><span class="s-title">${s.title}</span><span class="s-toggle">▾</span>
       </div>
       <div class="section-editor-body">
         <div class="field-group">
@@ -479,217 +310,287 @@ window.addEventListener('DOMContentLoaded', () => {
       </div>
     </div>`;
   });
-
-  // init QAs
   for (let i = 0; i < 5; i++) addQA();
-  // init cal
   addCalItem('cal-week'); addCalItem('cal-week'); addCalItem('cal-week');
   addCalItem('cal-month'); addCalItem('cal-month'); addCalItem('cal-month');
-
-  // init items for s1
   addItem('s1-items');
 });
 
-// ── TOGGLE ──
 function toggleSection(header) {
   const body = header.nextElementSibling;
   const toggle = header.querySelector('.s-toggle');
   if (body.classList.contains('collapsed')) {
-    body.classList.remove('collapsed');
-    toggle.textContent = '▾';
+    body.classList.remove('collapsed'); toggle.textContent = '▾';
   } else {
-    body.classList.add('collapsed');
-    toggle.textContent = '▸';
+    body.classList.add('collapsed'); toggle.textContent = '▸';
   }
 }
 
-// ── ITEMS ──
 let itemCount = 0;
 function addItem(containerId) {
   const id = `item_${itemCount++}`;
   const el = document.createElement('div');
-  el.className = 'item-row hot';
-  el.id = id;
-  el.innerHTML = `
-    <div class="item-row-header">
-      <select class="item-type-select" onchange="updateItemColor(this)">
-        <option value="hot">🔴 重点</option>
-        <option value="positive">🟢 积极</option>
-        <option value="neutral">🟡 观察</option>
-        <option value="dark">⚫ 警示</option>
-      </select>
-      <input type="text" class="item-title-input" placeholder="条目标题（可含 TICKER +5%）">
-      <button class="remove-item-btn" onclick="document.getElementById('${id}').remove()">×</button>
-    </div>
-    <textarea class="item-body-input" placeholder="正文内容...支持**粗体**" style="min-height:64px;"></textarea>
-  `;
+  el.className = 'item-row hot'; el.id = id;
+  el.innerHTML = `<div class="item-row-header">
+    <select class="item-type-select" onchange="updateItemColor(this)">
+      <option value="hot">🔴 重点</option><option value="positive">🟢 积极</option>
+      <option value="neutral">🟡 观察</option><option value="dark">⚫ 警示</option>
+    </select>
+    <input type="text" class="item-title-input" placeholder="条目标题">
+    <button class="remove-item-btn" onclick="document.getElementById('${id}').remove()">×</button>
+  </div>
+  <textarea class="item-body-input" placeholder="正文...支持**粗体**" style="min-height:64px;"></textarea>`;
   document.getElementById(containerId).appendChild(el);
 }
+function updateItemColor(sel) { sel.closest('.item-row').className = `item-row ${sel.value}`; }
 
-function updateItemColor(sel) {
-  const row = sel.closest('.item-row');
-  row.className = `item-row ${sel.value}`;
-}
-
-// ── Q&A ──
 let qaCount = 0;
 function addQA() {
   const n = ++qaCount;
   const el = document.createElement('div');
-  el.className = 'qa-row';
-  el.id = `qa_${n}`;
-  el.innerHTML = `
-    <div class="qa-label">Q${n}</div>
+  el.className = 'qa-row'; el.id = `qa_${n}`;
+  el.innerHTML = `<div class="qa-label">Q${n}</div>
     <input type="text" id="qa_q_${n}" placeholder="问题..." style="margin-bottom:6px;">
     <textarea id="qa_a_${n}" placeholder="回答..." style="min-height:72px;"></textarea>
-    <button onclick="document.getElementById('qa_${n}').remove()" 
-      style="background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'IBM Plex Mono',monospace;margin-top:4px;">
-      移除
-    </button>
-    <hr class="separator">
-  `;
+    <button onclick="document.getElementById('qa_${n}').remove()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'IBM Plex Mono',monospace;margin-top:4px;">移除</button>
+    <hr class="separator">`;
   document.getElementById('qa-container').appendChild(el);
 }
 
-// ── CALENDAR ──
 let calCount = 0;
 function addCalItem(containerId) {
   const n = ++calCount;
   const el = document.createElement('div');
-  el.className = 'cal-row';
-  el.id = `cal_${n}`;
-  el.innerHTML = `
-    <input type="text" id="cal_date_${n}" placeholder="3/6 周五">
-    <input type="text" id="cal_text_${n}" placeholder="NFP 非农就业数据">
-    <input type="text" id="cal_stars_${n}" placeholder="★★★★★" class="cal-stars-input">
-  `;
+  el.className = 'cal-row'; el.id = `cal_${n}`;
+  el.innerHTML = `<input type="text" id="cal_date_${n}" placeholder="3/8 周日">
+    <input type="text" id="cal_text_${n}" placeholder="事件描述">
+    <input type="text" id="cal_stars_${n}" placeholder="★★★" class="cal-stars-input">`;
   document.getElementById(containerId).appendChild(el);
 }
 
-// ── COLLECT DATA ──
 function collectData() {
-  const items = (containerId) => {
-    const rows = document.getElementById(containerId)?.querySelectorAll('.item-row') || [];
+  const items = (cid) => {
+    const rows = document.getElementById(cid)?.querySelectorAll('.item-row') || [];
     return Array.from(rows).map(row => ({
       type: row.querySelector('select')?.value || 'hot',
       title: row.querySelector('.item-title-input')?.value || '',
       body: row.querySelector('textarea')?.value || '',
     })).filter(i => i.title || i.body);
   };
-
   const qaRows = document.querySelectorAll('.qa-row');
   const qas = Array.from(qaRows).map(row => {
     const n = row.id.replace('qa_','');
-    return {
-      q: document.getElementById(`qa_q_${n}`)?.value || '',
-      a: document.getElementById(`qa_a_${n}`)?.value || '',
-    };
+    return { q: document.getElementById(`qa_q_${n}`)?.value||'', a: document.getElementById(`qa_a_${n}`)?.value||'' };
   }).filter(q => q.q);
-
   const calWeekEls = document.getElementById('cal-week').querySelectorAll('.cal-row');
   const calMonthEls = document.getElementById('cal-month').querySelectorAll('.cal-row');
   const getCalItems = (els) => Array.from(els).map(el => {
     const n = el.id.replace('cal_','');
-    return {
-      date: document.getElementById(`cal_date_${n}`)?.value || '',
-      text: document.getElementById(`cal_text_${n}`)?.value || '',
-      stars: document.getElementById(`cal_stars_${n}`)?.value || '',
-    };
+    return { date: document.getElementById(`cal_date_${n}`)?.value||'', text: document.getElementById(`cal_text_${n}`)?.value||'', stars: document.getElementById(`cal_stars_${n}`)?.value||'' };
   }).filter(c => c.text);
-
   return {
     vol: document.getElementById('vol').value,
     date: document.getElementById('date').value,
     subtitle: document.getElementById('subtitle').value,
     headline: document.getElementById('headline').value,
     summary: document.getElementById('summary').value,
-    market: {
-      vix: document.getElementById('vix').value,
-      wti: document.getElementById('wti').value,
-      gold: document.getElementById('gold').value,
-      btc: document.getElementById('btc').value,
-      vix_note: document.getElementById('vix_note').value,
-      wti_note: document.getElementById('wti_note').value,
-      gold_note: document.getElementById('gold_note').value,
-      btc_note: document.getElementById('btc_note').value,
-    },
-    missile: {
-      enabled: document.getElementById('missile_enabled').checked,
-      days: [
-        document.getElementById('m1').value,
-        document.getElementById('m2').value,
-        document.getElementById('m3').value,
-        document.getElementById('m4').value,
-      ],
-      note: document.getElementById('missile_note').value,
-    },
+    market: { vix:document.getElementById('vix').value, wti:document.getElementById('wti').value, gold:document.getElementById('gold').value, btc:document.getElementById('btc').value, vix_note:document.getElementById('vix_note').value, wti_note:document.getElementById('wti_note').value, gold_note:document.getElementById('gold_note').value, btc_note:document.getElementById('btc_note').value },
+    missile: { enabled:document.getElementById('missile_enabled').checked, days:[document.getElementById('m1').value,document.getElementById('m2').value,document.getElementById('m3').value,document.getElementById('m4').value], note:document.getElementById('missile_note').value },
     sections: [
-      {
-        num: '01', title: document.getElementById('s1_title').value || '重磅财报',
-        type: 'earnings',
-        earnings: {
-          company: document.getElementById('earn_company').value,
-          ticker: document.getElementById('earn_ticker').value,
-          period: document.getElementById('earn_period').value,
-          afterhours: document.getElementById('earn_afterhours').value,
-          metrics: [
-            { label: document.getElementById('m_l1').value, value: document.getElementById('m_v1').value, sub: document.getElementById('m_s1').value },
-            { label: document.getElementById('m_l2').value, value: document.getElementById('m_v2').value, sub: document.getElementById('m_s2').value },
-            { label: document.getElementById('m_l3').value, value: document.getElementById('m_v3').value, sub: document.getElementById('m_s3').value },
-            { label: document.getElementById('m_l4').value, value: document.getElementById('m_v4').value, sub: document.getElementById('m_s4').value },
-          ].filter(m => m.label),
-          note: document.getElementById('earn_note').value,
-        },
-        items: items('s1-items'),
-      },
-      ...GENERIC_SECTIONS.map(s => ({
-        num: s.num, title: document.getElementById(`${s.id}_title`)?.value || s.defaultTitle,
-        type: 'items', items: items(`${s.id}-items`),
-      })),
+      { num:'01', title:document.getElementById('s1_title').value||'重磅财报', type:'earnings', earnings:{ company:document.getElementById('earn_company').value, ticker:document.getElementById('earn_ticker').value, period:document.getElementById('earn_period').value, afterhours:document.getElementById('earn_afterhours').value, metrics:[{label:document.getElementById('m_l1').value,value:document.getElementById('m_v1').value,sub:document.getElementById('m_s1').value},{label:document.getElementById('m_l2').value,value:document.getElementById('m_v2').value,sub:document.getElementById('m_s2').value},{label:document.getElementById('m_l3').value,value:document.getElementById('m_v3').value,sub:document.getElementById('m_s3').value},{label:document.getElementById('m_l4').value,value:document.getElementById('m_v4').value,sub:document.getElementById('m_s4').value}].filter(m=>m.label), note:document.getElementById('earn_note').value }, items:items('s1-items') },
+      ...GENERIC_SECTIONS.map(s => ({ num:s.num, title:document.getElementById(`${s.id}_title`)?.value||s.defaultTitle, type:'items', items:items(`${s.id}-items`) })),
     ],
     qas,
-    cal: { week: getCalItems(calWeekEls), month: getCalItems(calMonthEls) },
+    cal: { week:getCalItems(calWeekEls), month:getCalItems(calMonthEls) },
   };
 }
 
-// ── PREVIEW ──
-function previewBrief() {
-  const data = collectData();
-  const id = (data.date || '').replace(/-/g,'') || 'preview';
-  sessionStorage.setItem(`brief_preview_${id}`, JSON.stringify(data));
-  window.open(`/brief/${id}?preview=1`, '_blank');
+// ── 生成完整 HTML 文件 ──
+function buildHTML(d) {
+  function fmt(text) {
+    if (!text) return '';
+    return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  }
+  const dateStr = d.date ? new Date(d.date+'T12:00:00').toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'short'}) : '';
+  let body = '';
+
+  // masthead
+  body += `<div class="masthead">
+    <div class="masthead-title">前线<span>简报</span></div>
+    <div class="masthead-meta">${d.vol?`Vol.${d.vol} · `:''}${dateStr}<br>美东时间 盘前版<br>${d.subtitle?`<span style="color:var(--red);font-weight:600;">${d.subtitle}</span>`:''}</div>
+  </div>
+  <div class="edition-bar">
+    <span>FRONTLINE BRIEF · DAILY MARKET INTELLIGENCE</span>
+    <span class="etag">⚡ BREAKING</span>
+    <span>${[d.market?.vix?'VIX '+d.market.vix:'',d.market?.wti||'',d.market?.gold?'黄金 '+d.market.gold:''].filter(Boolean).join(' · ')}</span>
+  </div>`;
+
+  // summary
+  if (d.headline||d.summary) {
+    body += `<div class="summary-box"><div class="summary-headline">${fmt(d.headline||'')}</div><div class="summary-body">${fmt(d.summary||'')}</div></div>`;
+  }
+
+  // signal row
+  const m = d.market||{};
+  if (m.vix||m.wti||m.gold||m.btc) {
+    const cards = [{lbl:'VIX 恐慌指数',val:m.vix,sub:m.vix_note,cls:'nt'},{lbl:'WTI 原油',val:m.wti,sub:m.wti_note,cls:'dn'},{lbl:'黄金',val:m.gold,sub:m.gold_note,cls:'up'},{lbl:'比特币',val:m.btc,sub:m.btc_note,cls:'up'}].filter(c=>c.val);
+    if (cards.length) body += `<div class="signal-row">${cards.map(c=>`<div class="signal-card"><span class="lbl">${c.lbl}</span><span class="val ${c.cls}">${c.val}</span>${c.sub?`<span class="sub">${c.sub}</span>`:''}</div>`).join('')}</div>`;
+  }
+
+  // missile
+  const ms = d.missile;
+  if (ms?.enabled&&ms.days?.some(x=>x)) {
+    const maxVal = Math.max(...ms.days.map(x=>parseInt(x)||0));
+    body += `<div class="tracker"><div class="tracker-title">▌ 自建指标 · 每日导D消耗量追踪</div><div class="tracker-bars">${ms.days.map((v,i)=>{const n=parseInt(v)||0;const h=maxVal>0?Math.round((n/maxVal)*50):0;const op=1-(i*0.15);return `<div class="tracker-day"><div class="cnt">${v||'—'}</div><div class="bar" style="height:${h}px;opacity:${op};"></div><div class="dlbl">D${i+1}</div></div>`;}).join('')}</div>${ms.note?`<div class="tracker-note">${fmt(ms.note)}</div>`:''}</div>`;
+  }
+
+  body += `<hr class="rule-thick">`;
+
+  // sections
+  (d.sections||[]).forEach((sec,idx)=>{
+    if(!sec.title&&!sec.items?.length&&sec.type!=='earnings') return;
+    const tagColors=['tag-g','tag-g','tag-o','tag-r','tag-r'];
+    const tagLabels=['✦ 超预期','✦ 积极','→ 观察','⚠ 关注','⚠ 持续追踪'];
+    body += `<div class="section"><div class="section-hdr"><span class="s-num">${String(idx+1).padStart(2,'0')}</span><span class="s-title">${sec.title||''}</span><span class="s-tag ${tagColors[idx]||'tag-n'}">${tagLabels[idx]||''}</span></div>`;
+    if (sec.type==='earnings'&&sec.earnings) {
+      const e=sec.earnings;
+      body += `<div class="earn-card"><div class="earn-hdr"><div class="co">${e.company||''} <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#aaa;">${e.ticker?e.ticker+' · ':''}${e.period||''}</span></div><div class="verdict">${e.afterhours||''}</div></div><div class="earn-grid">${(e.metrics||[]).map(m=>`<div class="earn-metric"><span class="ml">${m.label}</span><span class="mv">${m.value}</span>${m.sub?`<span class="ms">${m.sub}</span>`:''}</div>`).join('')}</div>${e.note?`<div class="earn-note">${fmt(e.note)}</div>`:''}</div>`;
+    }
+    (sec.items||[]).forEach(item=>{
+      body += `<div class="item ${item.type||'hot'}">${item.title?`<div class="item-title">${item.title}</div>`:''}${item.body?`<div class="item-body">${fmt(item.body)}</div>`:''}</div>`;
+    });
+    body += `</div>`;
+    if (idx<(d.sections?.length||0)-1) body += `<hr class="rule-h">`;
+  });
+
+  body += `<hr class="rule-thick">`;
+
+  // Q&A
+  if (d.qas?.length) {
+    body += `<div class="section"><div class="section-hdr"><span class="s-num">Q&A</span><span class="s-title">今日焦点 Q&A</span><span class="s-tag tag-n">5问5答</span></div>${d.qas.map(q=>`<div class="qa-item"><div class="qa-q">${q.q}</div><div class="qa-a">${fmt(q.a)}</div></div>`).join('')}</div><hr class="rule-thick">`;
+  }
+
+  // Calendar
+  if (d.cal&&(d.cal.week?.length||d.cal.month?.length)) {
+    body += `<div class="section"><div class="section-hdr"><span class="s-num">CAL</span><span class="s-title">本周 &amp; 本月日历</span><span class="s-tag tag-n">📅 追踪</span></div><div class="cal-grid"><div><div class="cal-sec-title">── 本周</div>${(d.cal.week||[]).map(c=>`<div class="cal-item"><span class="cal-date">${c.date}</span><div><div class="cal-text">${fmt(c.text)}</div><div class="cal-stars">${c.stars||''}</div></div></div>`).join('')}</div><div><div class="cal-sec-title">── 本月</div>${(d.cal.month||[]).map(c=>`<div class="cal-item"><span class="cal-date">${c.date}</span><div><div class="cal-text">${fmt(c.text)}</div><div class="cal-stars">${c.stars||''}</div></div></div>`).join('')}</div></div></div>`;
+  }
+
+  body += `<div class="footer"><div class="footer-brand">前线<span>简报</span> · FRONTLINE BRIEF</div><div class="footer-disc">本报告仅供参考，不构成投资建议<br>数据截至 ${d.date||''} 美东时间盘前</div></div>`;
+
+  // 完整 HTML
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前线简报 Vol.${d.vol||'??'} · ${d.date||''}</title>
+<meta property="og:title" content="前线简报 Vol.${d.vol||''} · ${d.date||''}">
+<meta property="og:description" content="${(d.headline||'').replace(/"/g,'&quot;')}">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+SC:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--ink:#0d0d0d;--paper:#f5f0e8;--paper-dark:#ede7d9;--red:#c0392b;--red-muted:#8b2a1f;--gold:#b8860b;--gray:#5a5a5a;--gray-light:#999;--divider:#c8bfaa;--green:#1a6b3a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.75;max-width:780px;margin:0 auto;padding:40px 24px 80px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23d4c9b0' opacity='0.35'/%3E%3C/svg%3E");}
+.masthead{border-top:4px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0 12px;margin-bottom:0;display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+.masthead-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.masthead-title span{color:var(--red);}
+.masthead-meta{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray);line-height:1.6;}
+.edition-bar{background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;padding:5px 12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:4px;}
+.edition-bar .etag{background:var(--red);color:white;padding:1px 7px;font-size:9px;}
+.summary-box{border:1.5px solid var(--ink);padding:20px 22px;margin-bottom:28px;position:relative;background:white;}
+.summary-box::before{content:'摘要';position:absolute;top:-10px;left:16px;background:white;padding:0 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--gray);border:1px solid var(--ink);}
+.summary-headline{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;line-height:1.35;margin-bottom:12px;color:var(--ink);}
+.summary-body{font-size:13.5px;color:#333;line-height:1.85;}
+.signal-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--divider);border:1px solid var(--divider);margin-bottom:28px;}
+.signal-card{background:var(--paper);padding:12px 14px;text-align:center;}
+.signal-card .lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--gray-light);display:block;margin-bottom:3px;}
+.signal-card .val{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;line-height:1;display:block;}
+.signal-card .sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray);margin-top:2px;display:block;}
+.up{color:var(--green);}.dn{color:var(--red);}.nt{color:var(--gold);}
+.tracker{border:1px solid var(--divider);padding:14px 18px;margin-bottom:22px;background:var(--paper-dark);}
+.tracker-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--gray);margin-bottom:10px;}
+.tracker-bars{display:flex;align-items:flex-end;gap:8px;height:54px;}
+.tracker-day{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.tracker-day .bar{width:100%;background:var(--red);}
+.tracker-day .dlbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray);}
+.tracker-day .cnt{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--red);}
+.tracker-note{font-size:12px;color:var(--gray);margin-top:8px;font-style:italic;}
+.section{margin-bottom:28px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:7px;border-bottom:2px solid var(--ink);}
+.s-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray-light);letter-spacing:0.1em;}
+.s-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);flex:1;}
+.s-tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:2px 7px;border:1px solid;}
+.tag-r{color:var(--red);border-color:var(--red);}.tag-g{color:var(--green);border-color:var(--green);}.tag-o{color:var(--gold);border-color:var(--gold);}.tag-n{color:var(--gray);border-color:var(--gray);}
+.earn-card{border:1.5px solid var(--ink);margin-bottom:16px;background:white;}
+.earn-hdr{background:var(--ink);color:var(--paper);padding:9px 14px;display:flex;justify-content:space-between;align-items:center;}
+.earn-hdr .co{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;}
+.earn-hdr .verdict{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7fff7f;letter-spacing:0.08em;}
+.earn-grid{display:grid;grid-template-columns:repeat(2,1fr);}
+.earn-metric{padding:10px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);}
+.earn-metric:nth-child(2n){border-right:none;}
+.earn-metric .ml{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray-light);letter-spacing:0.08em;display:block;margin-bottom:2px;}
+.earn-metric .mv{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;display:block;}
+.earn-metric .ms{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--green);display:block;}
+.earn-note{padding:10px 14px;font-size:13px;color:#444;border-top:1px solid var(--divider);line-height:1.75;}
+.item{margin-bottom:14px;padding-left:14px;border-left:3px solid var(--divider);}
+.item.hot{border-left-color:var(--red);}.item.positive{border-left-color:var(--green);}.item.neutral{border-left-color:var(--gold);}.item.dark{border-left-color:var(--ink);}
+.item-title{font-weight:700;font-size:14px;margin-bottom:3px;}
+.item-body{font-size:13px;color:#3a3a3a;line-height:1.8;}
+.qa-item{margin-bottom:18px;}
+.qa-q{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;margin-bottom:5px;display:flex;gap:8px;align-items:flex-start;}
+.qa-q::before{content:'Q';font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--ink);color:var(--paper);padding:2px 5px;flex-shrink:0;margin-top:2px;}
+.qa-a{font-size:13px;color:#3a3a3a;line-height:1.85;padding-left:26px;border-left:1px dashed var(--divider);margin-left:13px;}
+.cal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cal-sec-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--gray);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--divider);}
+.cal-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;}
+.cal-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray-light);white-space:nowrap;padding-top:2px;min-width:32px;}
+.cal-text{color:#333;line-height:1.55;}
+.cal-stars{font-size:9px;color:var(--gold);white-space:nowrap;}
+.rule-h{border:none;border-top:1px solid var(--divider);margin:20px 0;}
+.rule-thick{border:none;border-top:2px solid var(--ink);margin:26px 0;}
+.footer{margin-top:48px;padding-top:14px;border-top:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.footer-brand{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--gray);}
+.footer-brand span{color:var(--red);}
+.footer-disc{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray-light);text-align:right;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gray);text-decoration:none;margin-bottom:20px;letter-spacing:0.08em;}
+.back-link:hover{color:var(--ink);}
+@media(max-width:600px){body{padding:24px 16px 40px;}.masthead{flex-direction:column;gap:6px;}.masthead-meta{text-align:left;}.signal-row{grid-template-columns:repeat(2,1fr);}.earn-grid{grid-template-columns:1fr;}.cal-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<a href="/" class="back-link">← 返回简报列表</a>
+${body}
+</body>
+</html>`;
 }
 
-// ── PUBLISH ──
-async function publishBrief() {
+function generateAndDownload() {
   const data = collectData();
   if (!data.date || !data.headline) {
     showStatus('error', '请填写日期和标题');
     return;
   }
-  const password = document.getElementById('password').value;
-  showStatus('loading', '正在发布...');
+  const vol = data.vol || '??';
+  const filename = `brief-vol${vol.padStart(2,'0')}.html`;
+  const html = buildHTML(data);
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
 
-  try {
-    const res = await fetch('/api/save', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${password}`,
-      },
-      body: JSON.stringify(data),
-    });
-    const json = await res.json();
-    if (!res.ok) throw new Error(json.error || '发布失败');
+  showStatus('success', `✓ ${filename} 已生成`);
+  const guide = document.getElementById('download-guide');
+  guide.style.display = 'block';
+  document.getElementById('dl-filename').textContent = filename;
+}
 
-    const url = `${location.origin}${json.url}`;
-    showStatus('success', `✓ 发布成功`);
-    document.getElementById('published-link').style.display = 'block';
-    document.getElementById('pub-link').href = url;
-    document.getElementById('pub-link').textContent = url;
-  } catch (err) {
-    showStatus('error', `✗ ${err.message}`);
-  }
+function previewBrief() {
+  const data = collectData();
+  const html = buildHTML(data);
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
 }
 
 function showStatus(type, msg) {
@@ -698,165 +599,72 @@ function showStatus(type, msg) {
   el.textContent = msg;
 }
 
-function copyLink() {
-  const link = document.getElementById('pub-link').href;
-  navigator.clipboard.writeText(link).then(() => {
-    showStatus('success', '✓ 链接已复制');
-  });
-}
-</script>
-<!-- IMPORT MODAL -->
-<div id="import-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;display:none;align-items:center;justify-content:center;">
-  <div style="background:#141414;border:1px solid #333;width:90%;max-width:680px;padding:28px;position:relative;">
-    <div style="font-family:'Playfair Display',serif;font-size:18px;color:#e8e0d0;margin-bottom:6px;">📋 导入 JSON</div>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#666;margin-bottom:16px;">粘贴由 Claude 生成的简报 JSON，一键填入所有字段</div>
-    <textarea id="import-json-input" style="width:100%;height:260px;background:#0d0d0d;border:1px solid #333;color:#b8e0b8;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:12px;outline:none;resize:vertical;" placeholder='粘贴 JSON 到这里...'></textarea>
-    <div id="import-error" style="color:#e57373;font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:8px;display:none;"></div>
-    <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
-      <button onclick="closeImport()" style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 20px;background:transparent;color:#888;border:1px solid #444;cursor:pointer;">取消</button>
-      <button onclick="doImport()" style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 24px;background:#7cb8e0;color:#0d0d0d;border:none;cursor:pointer;font-weight:600;">一键填入 →</button>
-    </div>
-  </div>
-</div>
-
-<script>
 function openImport() {
   const m = document.getElementById('import-modal');
   m.style.display = 'flex';
   document.getElementById('import-json-input').value = '';
   document.getElementById('import-error').style.display = 'none';
 }
-function closeImport() {
-  document.getElementById('import-modal').style.display = 'none';
-}
+function closeImport() { document.getElementById('import-modal').style.display = 'none'; }
 
 function doImport() {
   const raw = document.getElementById('import-json-input').value.trim();
   let d;
-  try {
-    d = JSON.parse(raw);
-  } catch(e) {
-    const errEl = document.getElementById('import-error');
-    errEl.textContent = 'JSON 格式错误：' + e.message;
-    errEl.style.display = 'block';
-    return;
-  }
+  try { d = JSON.parse(raw); }
+  catch(e) { const el=document.getElementById('import-error'); el.textContent='JSON 格式错误：'+e.message; el.style.display='block'; return; }
   loadData(d);
   closeImport();
-  showStatus('success', '✓ 导入成功，请检查内容后点发布');
+  showStatus('success', '✓ 导入成功，点「生成 HTML」下载');
 }
 
-function setVal(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.value = val || '';
-}
+function setVal(id, val) { const el=document.getElementById(id); if(el) el.value=val||''; }
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 function loadData(d) {
-  // Basic fields
-  setVal('vol', d.vol);
-  setVal('subtitle', d.subtitle);
-  setVal('headline', d.headline);
-  setVal('summary', d.summary);
-  if (d.date) setVal('date', d.date);
-
-  // Market
-  const m = d.market || {};
-  setVal('vix', m.vix); setVal('wti', m.wti);
-  setVal('gold', m.gold); setVal('btc', m.btc);
-  setVal('vix_note', m.vix_note); setVal('wti_note', m.wti_note);
-  setVal('gold_note', m.gold_note); setVal('btc_note', m.btc_note);
-
-  // Missile
-  const ms = d.missile || {};
-  const cb = document.getElementById('missile_enabled');
-  if (cb) cb.checked = ms.enabled !== false;
-  (ms.days || []).forEach((v, i) => setVal(`m${i+1}`, v));
-  setVal('missile_note', ms.note);
-
-  // Section 1 (earnings)
-  const s1 = (d.sections || [])[0] || {};
-  setVal('s1_title', s1.title);
-  const e = s1.earnings || {};
-  setVal('earn_company', e.company); setVal('earn_ticker', e.ticker);
-  setVal('earn_period', e.period); setVal('earn_afterhours', e.afterhours);
-  setVal('earn_note', e.note);
-  (e.metrics || []).forEach((met, i) => {
-    const n = i + 1;
-    setVal(`m_l${n}`, met.label); setVal(`m_v${n}`, met.value); setVal(`m_s${n}`, met.sub);
-  });
-
-  // Clear and reload s1 items
-  loadItems('s1-items', s1.items || []);
-
-  // Generic sections s2-s5
-  const SIDS = ['s2','s3','s4','s5'];
-  SIDS.forEach((sid, idx) => {
-    const sec = (d.sections || [])[idx + 1] || {};
-    setVal(`${sid}_title`, sec.title);
-    loadItems(`${sid}-items`, sec.items || []);
-  });
-
-  // Q&A
-  const qaContainer = document.getElementById('qa-container');
-  qaContainer.innerHTML = '';
-  qaCount = 0;
-  (d.qas || []).forEach(q => {
-    const n = ++qaCount;
-    const el = document.createElement('div');
-    el.className = 'qa-row'; el.id = `qa_${n}`;
-    el.innerHTML = `
-      <div class="qa-label">Q${n}</div>
-      <input type="text" id="qa_q_${n}" style="margin-bottom:6px;" value="${escHtml(q.q || '')}">
-      <textarea id="qa_a_${n}" style="min-height:72px;">${escHtml(q.a || '')}</textarea>
-      <button onclick="document.getElementById('qa_${n}').remove()"
-        style="background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'IBM Plex Mono',monospace;margin-top:4px;">移除</button>
-      <hr class="separator">`;
+  setVal('vol',d.vol); setVal('subtitle',d.subtitle); setVal('headline',d.headline); setVal('summary',d.summary);
+  if(d.date) setVal('date',d.date);
+  const m=d.market||{};
+  setVal('vix',m.vix);setVal('wti',m.wti);setVal('gold',m.gold);setVal('btc',m.btc);
+  setVal('vix_note',m.vix_note);setVal('wti_note',m.wti_note);setVal('gold_note',m.gold_note);setVal('btc_note',m.btc_note);
+  const ms=d.missile||{};
+  const cb=document.getElementById('missile_enabled'); if(cb) cb.checked=ms.enabled!==false;
+  (ms.days||[]).forEach((v,i)=>setVal(`m${i+1}`,v));
+  setVal('missile_note',ms.note);
+  const s1=(d.sections||[])[0]||{};
+  setVal('s1_title',s1.title);
+  const e=s1.earnings||{};
+  setVal('earn_company',e.company);setVal('earn_ticker',e.ticker);setVal('earn_period',e.period);setVal('earn_afterhours',e.afterhours);setVal('earn_note',e.note);
+  (e.metrics||[]).forEach((met,i)=>{const n=i+1;setVal(`m_l${n}`,met.label);setVal(`m_v${n}`,met.value);setVal(`m_s${n}`,met.sub);});
+  loadItems('s1-items',s1.items||[]);
+  ['s2','s3','s4','s5'].forEach((sid,idx)=>{const sec=(d.sections||[])[idx+1]||{};setVal(`${sid}_title`,sec.title);loadItems(`${sid}-items`,sec.items||[]);});
+  const qaContainer=document.getElementById('qa-container');
+  qaContainer.innerHTML=''; qaCount=0;
+  (d.qas||[]).forEach(q=>{
+    const n=++qaCount; const el=document.createElement('div');
+    el.className='qa-row'; el.id=`qa_${n}`;
+    el.innerHTML=`<div class="qa-label">Q${n}</div><input type="text" id="qa_q_${n}" style="margin-bottom:6px;" value="${escHtml(q.q||'')}"><textarea id="qa_a_${n}" style="min-height:72px;">${escHtml(q.a||'')}</textarea><button onclick="document.getElementById('qa_${n}').remove()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'IBM Plex Mono',monospace;margin-top:4px;">移除</button><hr class="separator">`;
     qaContainer.appendChild(el);
   });
-
-  // Calendar
-  const loadCal = (containerId, items) => {
-    document.getElementById(containerId).innerHTML = '';
-    (items || []).forEach(c => {
-      const n = ++calCount;
-      const el = document.createElement('div');
-      el.className = 'cal-row'; el.id = `cal_${n}`;
-      el.innerHTML = `
-        <input type="text" id="cal_date_${n}" value="${escHtml(c.date||'')}">
-        <input type="text" id="cal_text_${n}" value="${escHtml(c.text||'')}">
-        <input type="text" id="cal_stars_${n}" value="${escHtml(c.stars||'')}" class="cal-stars-input">`;
-      document.getElementById(containerId).appendChild(el);
-    });
+  const loadCal=(cid,items)=>{
+    document.getElementById(cid).innerHTML='';
+    (items||[]).forEach(c=>{const n=++calCount;const el=document.createElement('div');el.className='cal-row';el.id=`cal_${n}`;el.innerHTML=`<input type="text" id="cal_date_${n}" value="${escHtml(c.date||'')}"><input type="text" id="cal_text_${n}" value="${escHtml(c.text||'')}"><input type="text" id="cal_stars_${n}" value="${escHtml(c.stars||'')}" class="cal-stars-input">`;document.getElementById(cid).appendChild(el);});
   };
-  loadCal('cal-week', (d.cal || {}).week);
-  loadCal('cal-month', (d.cal || {}).month);
+  loadCal('cal-week',(d.cal||{}).week);
+  loadCal('cal-month',(d.cal||{}).month);
 }
 
 function loadItems(containerId, items) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.innerHTML = '';
-  items.forEach(item => {
-    const id = `item_${itemCount++}`;
-    const el = document.createElement('div');
-    el.className = `item-row ${item.type || 'hot'}`;
-    el.id = id;
-    const typeMap = { hot:'🔴 重点', positive:'🟢 积极', neutral:'🟡 观察', dark:'⚫ 警示' };
-    const opts = Object.entries(typeMap).map(([v,l]) =>
-      `<option value="${v}"${item.type===v?' selected':''}>${l}</option>`).join('');
-    el.innerHTML = `
-      <div class="item-row-header">
-        <select class="item-type-select" onchange="updateItemColor(this)">${opts}</select>
-        <input type="text" class="item-title-input" value="${escHtml(item.title||'')}">
-        <button class="remove-item-btn" onclick="document.getElementById('${id}').remove()">×</button>
-      </div>
-      <textarea class="item-body-input" style="min-height:64px;">${escHtml(item.body||'')}</textarea>`;
+  const container=document.getElementById(containerId); if(!container) return;
+  container.innerHTML='';
+  items.forEach(item=>{
+    const id=`item_${itemCount++}`; const el=document.createElement('div');
+    el.className=`item-row ${item.type||'hot'}`; el.id=id;
+    const typeMap={hot:'🔴 重点',positive:'🟢 积极',neutral:'🟡 观察',dark:'⚫ 警示'};
+    const opts=Object.entries(typeMap).map(([v,l])=>`<option value="${v}"${item.type===v?' selected':''}>${l}</option>`).join('');
+    el.innerHTML=`<div class="item-row-header"><select class="item-type-select" onchange="updateItemColor(this)">${opts}</select><input type="text" class="item-title-input" value="${escHtml(item.title||'')}"><button class="remove-item-btn" onclick="document.getElementById('${id}').remove()">×</button></div><textarea class="item-body-input" style="min-height:64px;">${escHtml(item.body||'')}</textarea>`;
     container.appendChild(el);
   });
 }
-
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
 </script>
 </body>
+</html>
