@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>霍尔木兹封锁：非原油品类全球依赖图谱</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8eaf0;
+    --muted: #6b7a99;
+    --accent: #f0a500;
+    --accent2: #e05c4b;
+    --accent3: #3ecfaa;
+    --accent4: #5b8dee;
+    --red5: #e05c4b;
+    --red4: #e88a3c;
+    --red3: #d4b84a;
+    --green2: #5b9e72;
+    --blue1: #5b8dee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240,165,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,165,0,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .header-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .header-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 640px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .meta-tag .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent3);
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .section-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  /* ── INTENSITY LEGEND ── */
+  .legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .legend-label {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    margin-right: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* ── COMMODITY CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.14);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .card[data-intensity="5"]::before { background: var(--red5); }
+  .card[data-intensity="4"]::before { background: var(--red4); }
+  .card[data-intensity="3"]::before { background: var(--red3); }
+  .card[data-intensity="2"]::before { background: var(--green2); }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .card-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .card-share {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .card[data-intensity="5"] .card-share { color: var(--red5); }
+  .card[data-intensity="4"] .card-share { color: var(--red4); }
+  .card[data-intensity="3"] .card-share { color: var(--red3); }
+  .card[data-intensity="2"] .card-share { color: var(--green2); }
+
+  .intensity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .card[data-intensity="5"] .intensity-badge { background: rgba(224,92,75,0.15); color: var(--red5); }
+  .card[data-intensity="4"] .intensity-badge { background: rgba(232,138,60,0.15); color: var(--red4); }
+  .card[data-intensity="3"] .intensity-badge { background: rgba(212,184,74,0.15); color: var(--red3); }
+  .card[data-intensity="2"] .intensity-badge { background: rgba(91,158,114,0.15); color: var(--green2); }
+
+  .card-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .card-row-label {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    padding-top: 1px;
+    line-height: 1.4;
+  }
+
+  .card-row-val {
+    font-size: 12px;
+    color: #c8cfe0;
+    line-height: 1.5;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 11px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 56px 0 48px;
+  }
+
+  /* ── STOCKS TABLE ── */
+  .stocks-section {
+    margin-bottom: 64px;
+  }
+
+  .theme-group {
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .theme-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .theme-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .theme-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .theme-count {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .stocks-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .stocks-table th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .stocks-table td {
+    padding: 13px 14px;
+    font-size: 12.5px;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+    color: #c8cfe0;
+  }
+
+  .stocks-table tr:hover td {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .ticker {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .company-name {
+    font-weight: 600;
+    color: #fff;
+    font-size: 13px;
+  }
+
+  .star-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .star-3 { background: rgba(224,92,75,0.15); color: #e05c4b; }
+  .star-2 { background: rgba(232,138,60,0.12); color: #e88a3c; }
+  .star-1 { background: rgba(91,141,238,0.12); color: #7ba8f0; }
+
+  .risk-text { color: var(--muted); font-size: 11.5px; }
+
+  /* Tab switcher */
+  .tab-switcher {
+    display: flex;
+    gap: 4px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 32px;
+    width: fit-content;
+  }
+
+  .tab-btn {
+    padding: 8px 20px;
+    border-radius: 7px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn.active {
+    background: var(--surface);
+    color: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .footer-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.10s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.20s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.30s; }
+  .card:nth-child(7) { animation-delay: 0.35s; }
+  .card:nth-child(8) { animation-delay: 0.40s; }
+  .card:nth-child(9) { animation-delay: 0.45s; }
+  .card:nth-child(10) { animation-delay: 0.50s; }
+  .card:nth-child(11) { animation-delay: 0.55s; }
+  .card:nth-child(12) { animation-delay: 0.60s; }
+
+  @media (max-width: 640px) {
+    .wrapper { padding: 40px 18px 60px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .stocks-table th:nth-child(4),
+    .stocks-table td:nth-child(4),
+    .stocks-table th:nth-child(5),
+    .stocks-table td:nth-child(5) { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">地缘风险情景分析</div>
+    <h1>霍尔木兹<span>封锁情景</span><br>非原油品类全球依赖图谱</h1>
+    <p class="header-sub">霍尔木兹海峡承载全球约20%的石油贸易，但其对非原油大宗商品的影响同样深远——从化肥、天然气到塑料原料，断供冲击将沿供应链快速传导。</p>
+    <div class="header-meta">
+      <div class="meta-tag"><span class="dot"></span>12个非原油品类</div>
+      <div class="meta-tag"><span class="dot" style="background:var(--accent)"></span>A股 + 美股受益标的</div>
+      <div class="meta-tag"><span class="dot" style="background:var(--accent2)"></span>封锁30天假设情景</div>
+      <div class="meta-tag"><span class="dot" style="background:var(--accent4)"></span>数据来源：IEA / UNCTAD</div>
+    </div>
+  </div>
+
+  <!-- TAB SWITCHER -->
+  <div class="tab-switcher">
+    <button class="tab-btn active" onclick="switchTab(event,'commodities')">品类图谱</button>
+    <button class="tab-btn" onclick="switchTab(event,'astocks')">A股标的</button>
+    <button class="tab-btn" onclick="switchTab(event,'usstocks')">美股标的</button>
+  </div>
+
+  <!-- ══ TAB 1: COMMODITIES ══ -->
+  <div id="commodities" class="tab-panel active">
+
+    <div class="legend">
+      <span class="legend-label">冲击烈度：</span>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red5)"></div>极高（5）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red4)"></div>高（4）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red3)"></div>中（3）</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green2)"></div>低（2）</div>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="card" data-intensity="5">
+        <div class="card-header">
+          <div>
+            <div class="card-num">01</div>
+            <div class="card-title">液化天然气（LNG）</div>
+          </div>
+          <div class="card-share">~20%</div>
+        </div>
+        <div class="intensity-badge">▲ 极高冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">卡塔尔（全球第二）、UAE</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">日本、韩国、中国、欧洲</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">日韩储备仅约 <strong style="color:#fff">2周</strong>；欧洲可切换管道气</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">发电</span><span class="tag">工业用气</span><span class="tag">乙烯裂解</span><span class="tag">居民供暖</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="5">
+        <div class="card-header">
+          <div>
+            <div class="card-num">02</div>
+            <div class="card-title">硫磺</div>
+          </div>
+          <div class="card-share">~50%</div>
+        </div>
+        <div class="intensity-badge">▲ 极高冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特（阿美伴生脱硫）、UAE、伊朗</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">摩洛哥、中国、印度、巴西</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val"><strong style="color:#e05c4b">几乎无替代产地</strong>；库存通常 &lt;2个月</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">磷肥</span><span class="tag">除草剂</span><span class="tag">铜/钴湿法冶金</span><span class="tag">电池材料</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="4">
+        <div class="card-header">
+          <div>
+            <div class="card-num">03</div>
+            <div class="card-title">液化石油气（LPG）</div>
+          </div>
+          <div class="card-share">&gt;20%</div>
+        </div>
+        <div class="intensity-badge">▲ 高冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特、卡塔尔、科威特</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">中国、印度、东南亚</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">储备有限；PDH产能切换受限</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">PDH→丙烯</span><span class="tag">PP塑料</span><span class="tag">家用燃气</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="4">
+        <div class="card-header">
+          <div>
+            <div class="card-num">04</div>
+            <div class="card-title">尿素</div>
+          </div>
+          <div class="card-share">~30%</div>
+        </div>
+        <div class="intensity-badge">▲ 高冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特、卡塔尔、伊朗</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">印度（无自给）、巴西、东南亚</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">替代需6-8周改道；印度无备选</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">氮肥</span><span class="tag">小麦/玉米/水稻</span><span class="tag">工业脱硝</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="4">
+        <div class="card-header">
+          <div>
+            <div class="card-num">05</div>
+            <div class="card-title">MEG（乙二醇）</div>
+          </div>
+          <div class="card-share">~30%</div>
+        </div>
+        <div class="intensity-badge">▲ 高冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特、UAE、伊朗</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">中国（全球最大消费方）</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">中国库存约30-45天；台韩少量备用</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">PET瓶</span><span class="tag">聚酯纤维</span><span class="tag">纺服</span><span class="tag">薄膜</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="3">
+        <div class="card-header">
+          <div>
+            <div class="card-num">06</div>
+            <div class="card-title">航空燃油（Jet Fuel）</div>
+          </div>
+          <div class="card-share">欧洲~25%</div>
+        </div>
+        <div class="intensity-badge">● 中等冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特、UAE（迪拜中转炼油）</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">欧洲、南亚、东非</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">欧洲炼产能不足；库存约4-6周</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">航空运输</span><span class="tag">物流</span><span class="tag">军事保障</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="3">
+        <div class="card-header">
+          <div>
+            <div class="card-num">07</div>
+            <div class="card-title">乙烯（单体）</div>
+          </div>
+          <div class="card-share">~15%</div>
+        </div>
+        <div class="intensity-badge">● 中等冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特（SABIC/阿美）、UAE</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">中国、韩国</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">可部分切换石脑油裂解；周期较长</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">聚乙烯(PE)</span><span class="tag">包装/管材</span><span class="tag">MEG→PET</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="3">
+        <div class="card-header">
+          <div>
+            <div class="card-num">08</div>
+            <div class="card-title">丙烯（单体）</div>
+          </div>
+          <div class="card-share">~10-15%</div>
+        </div>
+        <div class="intensity-badge">● 中等冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特、卡塔尔（PDH联产）</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">亚洲加工业</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">PP装置可切换原料；短期有缺口</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">PP→汽车/家电</span><span class="tag">医疗包装</span><span class="tag">丙烯酸→涂料</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="3">
+        <div class="card-header">
+          <div>
+            <div class="card-num">09</div>
+            <div class="card-title">合成氨</div>
+          </div>
+          <div class="card-share">~15-20%</div>
+        </div>
+        <div class="intensity-badge">● 中等冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特（SAFCO）、卡塔尔（QAFCO）</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">印度、东南亚、欧洲</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">可部分由俄气路线替代；运价跳升</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">尿素/硝酸铵</span><span class="tag">工业制冷</span><span class="tag">脱硝</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="3">
+        <div class="card-header">
+          <div>
+            <div class="card-num">10</div>
+            <div class="card-title">PX（对二甲苯）</div>
+          </div>
+          <div class="card-share">~10-15%</div>
+        </div>
+        <div class="intensity-badge">● 中等冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特、卡塔尔</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">中国（最大PTA-PET产业链）</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">中国国内PX产能近年大幅扩张</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">PX→PTA→PET</span><span class="tag">涤纶/瓶片</span><span class="tag">纺服</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="3">
+        <div class="card-header">
+          <div>
+            <div class="card-num">11</div>
+            <div class="card-title">PE/PP成品塑料粒</div>
+          </div>
+          <div class="card-share">~20%贸易量</div>
+        </div>
+        <div class="intensity-badge">● 中等冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">沙特（SABIC）、UAE、伊朗</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">亚洲加工业（包装/汽配/医疗）</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">库存2-4周；部分切换东南亚产能</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">快消品包装</span><span class="tag">汽车保险杠</span><span class="tag">医疗耗材</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-intensity="2">
+        <div class="card-header">
+          <div>
+            <div class="card-num">12</div>
+            <div class="card-title">铝土矿/氧化铝</div>
+          </div>
+          <div class="card-share">~15%</div>
+        </div>
+        <div class="intensity-badge">▼ 低冲击</div>
+        <div class="card-rows">
+          <div class="card-row"><div class="card-row-label">出口方</div><div class="card-row-val">UAE（EMAL）、巴林（ALBA）</div></div>
+          <div class="card-row"><div class="card-row-label">依赖方</div><div class="card-row-val">全球铝加工商</div></div>
+          <div class="card-row"><div class="card-row-label">缓冲</div><div class="card-row-val">可切换澳大利亚/几内亚矿源</div></div>
+          <div class="card-row"><div class="card-row-label">下游</div>
+            <div class="tag-list">
+              <span class="tag">原铝</span><span class="tag">汽车轻量化</span><span class="tag">建筑幕墙</span><span class="tag">航空机体</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- end tab commodities -->
+
+  <!-- ══ TAB 2: A STOCKS ══ -->
+  <div id="astocks" class="tab-panel">
+
+    <!-- Group 1: Coal -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(240,165,0,0.12);">🪨</div>
+        <div>
+          <div class="theme-name">煤炭替代LNG — 国内能源安全受益</div>
+          <div class="theme-count">3只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>代码</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">中国神华</div></td>
+            <td><span class="ticker">601088</span></td>
+            <td>全国最大动力煤企业；LNG价格飙升→工业切换煤炭→神华量价双升。分红稳健，防御+受益兼备。</td>
+            <td class="risk-text">煤价政策干预；环保限产</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">陕西煤业</div></td>
+            <td><span class="ticker">601225</span></td>
+            <td>陕西优质动力煤，成本极低，LNG紧缺时替代弹性最大，β系数高于神华。</td>
+            <td class="risk-text">产量增速放缓</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">兖矿能源</div></td>
+            <td><span class="ticker">600188</span></td>
+            <td>国内+澳洲煤矿兼备，供给侧稳健，受益煤价上行周期。</td>
+            <td class="risk-text">澳洲矿业政策风险</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Group 2: Phosphate -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(62,207,170,0.12);">🌿</div>
+        <div>
+          <div class="theme-name">硫磺断供 → 磷化工涨价</div>
+          <div class="theme-count">3只标的 · 最强结构性逻辑</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>代码</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">云天化</div></td>
+            <td><span class="ticker">600096</span></td>
+            <td>中国最大磷肥企业。硫磺供给收缩→磷肥出口价格上涨→云天化收入利润双升。需求全球刚性强。</td>
+            <td class="risk-text">硫磺成本侵蚀部分利润；出口限制政策</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">川恒股份</div></td>
+            <td><span class="ticker">002895</span></td>
+            <td>贵州磷矿资源型；磷肥+磷酸铁锂双主线，硫磺紧缺下磷价联动。资源端受益最纯粹。</td>
+            <td class="risk-text">磷酸铁锂价格波动</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">新洋丰</div></td>
+            <td><span class="ticker">000902</span></td>
+            <td>磷复肥龙头，产品价格与磷肥市场高度相关，直接受益涨价周期。</td>
+            <td class="risk-text">原材料成本上升对冲</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Group 3: Nitrogen -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(91,141,238,0.12);">🌾</div>
+        <div>
+          <div class="theme-name">尿素涨价 — 煤化工竞争力凸显</div>
+          <div class="theme-count">2只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>代码</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">华鲁恒升</div></td>
+            <td><span class="ticker">600426</span></td>
+            <td>煤化工一体化龙头，中东天然气基尿素断供→中国煤基尿素竞争力↑→华鲁出口溢价扩大。化工股中稀缺的高ROE标的。</td>
+            <td class="risk-text">出口政策管控（粮食安全考量）</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">湖北宜化</div></td>
+            <td><span class="ticker">000422</span></td>
+            <td>尿素+磷肥双品类，价格弹性大，进攻性强于华鲁，适合高风险偏好。</td>
+            <td class="risk-text">财务杠杆较高；波动大</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Group 4: LPG/PDH -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(224,92,75,0.12);">⚗️</div>
+        <div>
+          <div class="theme-name">LPG断供 → 丙烯/PP价格联动</div>
+          <div class="theme-count">2只标的 · 逻辑存在对冲性，需研判价差方向</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>代码</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">卫星化学</div></td>
+            <td><span class="ticker">002648</span></td>
+            <td>PDH制丙烯龙头，一体化程度高，体量大。LPG价格与丙烯价格联动上涨，规模效应维持价差稳定。</td>
+            <td class="risk-text">若LPG暴涨而PP需求弱，利润被压缩</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">东华能源</div></td>
+            <td><span class="ticker">002221</span></td>
+            <td>LPG进口贸易+PDH，持有库存在短期断供初期升值，纯短线博弈逻辑。</td>
+            <td class="risk-text">断供后补货成本暴涨；长期持有风险大</td>
+            <td><span class="star-badge star-1">★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Group 5: MEG/Polyester -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(91,141,238,0.12);">🧵</div>
+        <div>
+          <div class="theme-name">MEG断供 → 聚酯/涤纶价格上涨</div>
+          <div class="theme-count">2只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>代码</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">桐昆股份</div></td>
+            <td><span class="ticker">601233</span></td>
+            <td>全球最大聚酯纤维企业；中东MEG断供→国内MEG价格↑→桐昆涤纶产品联动提价。</td>
+            <td class="risk-text">服装消费低迷对冲涨价逻辑</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">恒力石化</div></td>
+            <td><span class="ticker">600346</span></td>
+            <td>原油→PX→PTA→PET一体化，MEG缺口放大PET供应紧张预期，成本优势+涨价受益双重逻辑。</td>
+            <td class="risk-text">体量大，弹性相对有限</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Group 6: Tankers -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(62,207,170,0.12);">🚢</div>
+        <div>
+          <div class="theme-name">能源运输 — 运费暴涨最纯粹受益</div>
+          <div class="theme-count">1只标的 · 逻辑最干净</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>代码</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">中远海能</div></td>
+            <td><span class="ticker">600026</span></td>
+            <td>VLCC油轮+LNG船运营龙头。霍尔木兹封锁→船只被迫绕行好望角→航程+40%→有效运力骤降→日费率飙升。历次中东危机验证。</td>
+            <td class="risk-text">冲突极短暂解除则运费快速回落</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- end tab astocks -->
+
+  <!-- ══ TAB 3: US STOCKS ══ -->
+  <div id="usstocks" class="tab-panel">
+
+    <!-- Crude oil -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(240,165,0,0.12);">🛢️</div>
+        <div>
+          <div class="theme-name">原油涨价 — 上游生产商</div>
+          <div class="theme-count">3只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>Ticker</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">ExxonMobil</div></td>
+            <td><span class="ticker">XOM</span></td>
+            <td>全球最大综合石油商，上游利润暴增+炼化毛利扩大。最直接的油价β。</td>
+            <td class="risk-text">全球需求同步下滑对冲；暴利税</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">Chevron</div></td>
+            <td><span class="ticker">CVX</span></td>
+            <td>上游重仓，油价每涨$10 FCF增约$30亿；哈萨克斯坦/美湾产量可部分填补缺口。</td>
+            <td class="risk-text">Permian成本低，受益幅度略小于纯上游</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">ConocoPhillips</div></td>
+            <td><span class="ticker">COP</span></td>
+            <td>纯上游无炼化拖累，油价弹性系数约为XOM的1.5-2倍，进攻性最强的石油β。</td>
+            <td class="risk-text">纯上游对价格下行也最脆弱</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Oilfield services -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(232,138,60,0.12);">⚙️</div>
+        <div>
+          <div class="theme-name">油服需求 — 非中东产能加速开发（滞后6-12月）</div>
+          <div class="theme-count">2只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>Ticker</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">SLB</div></td>
+            <td><span class="ticker">SLB</span></td>
+            <td>各国加速非中东产能开发→钻探服务需求激增；2022年油价周期中年涨逾60%。</td>
+            <td class="risk-text">需求滞后油价6-12个月</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">Halliburton</div></td>
+            <td><span class="ticker">HAL</span></td>
+            <td>完井/钻井服务龙头，美国页岩增产直接受益，历史弹性略高于SLB。</td>
+            <td class="risk-text">若封锁极短期解除，增产窗口未打开</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tankers -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(62,207,170,0.12);">🚢</div>
+        <div>
+          <div class="theme-name">油轮运费 — 绕行好望角使吨海里需求激增</div>
+          <div class="theme-count">3只标的 · 最纯粹的冲突受益</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>Ticker</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">Frontline</div></td>
+            <td><span class="ticker">FRO</span></td>
+            <td>全球最大VLCC公司。封锁→绕航距离+40%→有效运力↓30%→日费率从$30k飙至$100k+。2024年胡塞期间FRO+40%。逻辑最干净。</td>
+            <td class="risk-text">冲突快速解除则运费回落</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">International Seaways</div></td>
+            <td><span class="ticker">INSW</span></td>
+            <td>VLCC+苏伊士型组合，弹性略低于FRO但估值更便宜。</td>
+            <td class="risk-text">流动性较FRO低</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">Teekay Tankers</div></td>
+            <td><span class="ticker">TNK</span></td>
+            <td>中型油轮，绕行路线灵活，2022-2023周期涨幅超200%，小市值高弹性。</td>
+            <td class="risk-text">运费见顶回落风险</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LNG -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(91,141,238,0.12);">🔥</div>
+        <div>
+          <div class="theme-name">LNG价格飙升 — 美国出口商现货溢价</div>
+          <div class="theme-count">2只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>Ticker</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">Cheniere Energy</div></td>
+            <td><span class="ticker">LNG</span></td>
+            <td>美国最大LNG出口商。卡塔尔/UAE断供→亚欧抢购美国LNG→现货溢价暴涨。2022年欧洲危机中从$100→$180。</td>
+            <td class="risk-text">长协锁价限制部分弹性；满产能无增量</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">New Fortress Energy</div></td>
+            <td><span class="ticker">NFE</span></td>
+            <td>小市值LNG基础设施+供应，现货敞口更大，弹性高于Cheniere，高风险高回报。</td>
+            <td class="risk-text">财务杠杆高；流动性风险</td>
+            <td><span class="star-badge star-1">★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Fertilizers -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(62,207,170,0.12);">🌱</div>
+        <div>
+          <div class="theme-name">化肥涨价 — 硫磺/天然气断供传导</div>
+          <div class="theme-count">3只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>Ticker</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">Mosaic</div></td>
+            <td><span class="ticker">MOS</span></td>
+            <td>全球最大磷肥+钾肥生产商。硫磺断供→磷肥供应收缩→价格上涨。2021-22周期从$20→$80。与A股云天化为同一条链的美股端。</td>
+            <td class="risk-text">硫磺成本上升也侵蚀利润，净效应看传导速度</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">CF Industries</div></td>
+            <td><span class="ticker">CF</span></td>
+            <td>北美最大氮肥（尿素/硝酸铵）。中东断供→CF美国煤/气基尿素竞争力↑→量价双升。2022年涨幅超80%。对应A股华鲁恒升。</td>
+            <td class="risk-text">天然气原料成本波动；出口关税</td>
+            <td><span class="star-badge star-3">★★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">Nutrien</div></td>
+            <td><span class="ticker">NTR</span></td>
+            <td>全球最大钾肥兼大型氮肥，化肥超级周期全面受益，弹性略低但最稳健。</td>
+            <td class="risk-text">钾肥价格独立波动</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Defense -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(224,92,75,0.12);">🛡️</div>
+        <div>
+          <div class="theme-name">军工/防御 — A股独缺的主线</div>
+          <div class="theme-count">2只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>Ticker</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">RTX（Raytheon）</div></td>
+            <td><span class="ticker">RTX</span></td>
+            <td>霍尔木兹危机→美军中东存在加强→Patriot/导弹系统采购提速；中东盟国同步加购。</td>
+            <td class="risk-text">冲突降级则溢价快速消退</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">Lockheed Martin</div></td>
+            <td><span class="ticker">LMT</span></td>
+            <td>F-35+导弹防御，沙特/UAE/以色列军购加速，订单积压增加；历史上每次中东升温均跑赢大盘。</td>
+            <td class="risk-text">军售审批周期长，短期业绩不直接体现</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Energy transition -->
+    <div class="theme-group">
+      <div class="theme-header">
+        <div class="theme-icon" style="background:rgba(91,141,238,0.12);">⚡</div>
+        <div>
+          <div class="theme-name">能源安全 → 替代能源加速（中长期）</div>
+          <div class="theme-count">2只标的</div>
+        </div>
+      </div>
+      <table class="stocks-table">
+        <thead>
+          <tr><th>公司</th><th>Ticker</th><th>核心逻辑</th><th>主要风险</th><th>评级</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="company-name">First Solar</div></td>
+            <td><span class="ticker">FSLR</span></td>
+            <td>能源安全议题↑→IRA补贴光伏→FSLR美国制造溢价扩大。2022年危机中逆市大涨。中长期战略逻辑。</td>
+            <td class="risk-text">短期油价高不立即传导光伏需求</td>
+            <td><span class="star-badge star-1">★</span></td>
+          </tr>
+          <tr>
+            <td><div class="company-name">Constellation Energy</div></td>
+            <td><span class="ticker">CEG</span></td>
+            <td>美国最大核电运营商。化石能源价格↑→无碳基荷电源溢价重估；2024年AI用电+能源安全双主线年涨逾100%。</td>
+            <td class="risk-text">核电监管；核燃料成本</td>
+            <td><span class="star-badge star-2">★★</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- end tab usstocks -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-note">
+      ⚠️ 风险提示：以上内容仅为情景分析框架，不构成任何投资建议。具体标的需结合当前估值、仓位及个人风险偏好综合判断。历史涨跌幅不代表未来表现。<br>
+      数据来源：IEA / UNCTAD / 各行业协会公开数据整理
+    </div>
+    <div class="footer-date">March 2026</div>
+  </div>
+
+</div><!-- end wrapper -->
+
+<script>
+function switchTab(e, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>
