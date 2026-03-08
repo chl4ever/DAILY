@@ -6,101 +6,90 @@
 <title>前线简报 · Frontline Brief</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Serif+SC:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-:root{--ink:#0d0d0d;--paper:#f5f0e8;--paper-dark:#ede7d9;--red:#c0392b;--gold:#b8860b;--gray:#5a5a5a;--divider:#c8bfaa;--green:#1a6b3a;}
+:root{--ink:#0d0d0d;--paper:#f5f0e8;--paper-dark:#ede7d9;--red:#c0392b;--gold:#b8860b;--gray:#5a5a5a;--divider:#c8bfaa;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--paper);color:var(--ink);font-family:'Noto Serif SC',serif;min-height:100vh;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23d4c9b0' opacity='0.35'/%3E%3C/svg%3E");}
-
-.hero {
-  background:var(--ink); color:var(--paper);
-  padding:48px 40px 36px; text-align:center;
-  border-bottom:3px solid var(--red);
-}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Serif SC',serif;min-height:100vh;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23d4c9b0' opacity='0.35'/%3E%3C/svg%3E");}
+.hero{background:var(--ink);color:var(--paper);padding:48px 40px 36px;text-align:center;border-bottom:3px solid var(--red);}
 .hero-title{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;letter-spacing:-2px;line-height:1;}
 .hero-title span{color:var(--red);}
 .hero-sub{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.15em;color:#888;margin-top:10px;}
 .hero-desc{font-size:13px;color:#bbb;margin-top:14px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;}
-
 .main{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
 .section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.15em;color:var(--gray);margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid var(--divider);}
-
 .brief-list{list-style:none;}
-.brief-item{
-  border-bottom:1px solid var(--divider); padding:20px 0;
-  display:grid; grid-template-columns:80px 1fr auto;
-  gap:16px; align-items:start; cursor:pointer;
-  text-decoration:none; color:var(--ink);
-  transition:background 0.15s;
-}
-.brief-item:hover{background:rgba(0,0,0,0.02);margin:0 -12px;padding-left:12px;padding-right:12px;}
+.brief-item{border-bottom:1px solid var(--divider);padding:20px 0;display:grid;grid-template-columns:80px 1fr auto;gap:16px;align-items:start;cursor:pointer;text-decoration:none;color:var(--ink);}
 .brief-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gray);line-height:1.5;padding-top:3px;}
 .brief-vol{font-size:9px;color:var(--gold);letter-spacing:0.1em;}
 .brief-headline{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;line-height:1.4;margin-bottom:4px;}
-.brief-arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--divider);padding-top:3px;transition:color 0.2s;}
-.brief-item:hover .brief-arrow{color:var(--red);}
-
+.brief-arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--divider);padding-top:3px;}
 .empty{text-align:center;padding:60px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gray);}
-
-.edit-fab{
-  position:fixed;bottom:28px;right:28px;
-  background:var(--ink);color:var(--paper);
-  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;
-  padding:12px 22px;text-decoration:none;border:none;cursor:pointer;
-  border:1px solid var(--red);
-  transition:all 0.2s;
-  box-shadow:0 4px 20px rgba(0,0,0,0.3);
-}
-.edit-fab:hover{background:var(--red);}
-
 #loading{text-align:center;padding:40px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gray);}
+.edit-fab{position:fixed;bottom:28px;right:28px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;padding:12px 22px;text-decoration:none;border:1px solid var(--red);}
+@media(max-width:600px){.hero{padding:32px 20px 24px;}.hero-title{font-size:38px;}.main{padding:32px 16px 80px;}.brief-item{grid-template-columns:60px 1fr 20px;gap:10px;}}
 
-@media(max-width:600px){
-  .hero{padding:32px 20px 24px;}
-  .hero-title{font-size:38px;}
-  .main{padding:32px 16px 80px;}
-  .brief-item{grid-template-columns:60px 1fr 20px;gap:10px;}
-}
+/* ── 深度分析专题 ── */
+.analysis-item{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:20px 0;border-bottom:1px solid var(--divider);text-decoration:none;color:var(--ink);}
+.analysis-item:first-of-type{border-top:1px solid var(--divider);}
+.analysis-item:hover .analysis-title{color:var(--red);}
+.analysis-item:hover .brief-arrow{color:var(--red);}
+.analysis-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--gold);margin-bottom:5px;}
+.analysis-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;line-height:1.4;margin-bottom:4px;transition:color 0.15s;}
+.analysis-desc{font-size:12px;color:var(--gray);line-height:1.6;}
+.analysis-section{margin-bottom:48px;}
 </style>
 </head>
 <body>
-
 <div class="hero">
   <div class="hero-title">前线<span>简报</span></div>
   <div class="hero-sub">FRONTLINE BRIEF · DAILY MARKET INTELLIGENCE</div>
   <div class="hero-desc">每日盘前深度市场简报。聚焦重磅业绩、地缘风险、AI算力与宏观路径。</div>
 </div>
-
 <div class="main">
+
+  <!-- ══ 深度分析专题 ══ -->
+  <div class="section-label analysis-section-label">── 深度分析专题</div>
+  <div class="analysis-section">
+
+    <a class="analysis-item" href="/hormuz_analysis.html">
+      <div>
+        <div class="analysis-tag">DEEP DIVE · 2026.03.06 · 地缘风险</div>
+        <div class="analysis-title">霍尔木兹海峡危机全景分析</div>
+        <div class="analysis-desc">供应冲击机制 · 能源市场推演 · 亚洲暴露度 · 交易框架与投资含义</div>
+      </div>
+      <div class="brief-arrow">→</div>
+    </a>
+
+    <!-- 新增专题：复制上面 <a class="analysis-item"> 块，改链接/标题/描述 -->
+
+  </div>
+
+  <!-- ══ 往期简报存档（原有，未改动）══ -->
   <div class="section-label">── 往期简报存档</div>
   <div id="loading">载入中...</div>
   <ul class="brief-list" id="list" style="display:none;"></ul>
   <div class="empty" id="empty" style="display:none;">暂无简报，点击右下角「写简报」发布第一期。</div>
+
 </div>
-
-<a href="/editor" class="edit-fab">✏ 写简报</a>
-
+<a href="/edit.html" class="edit-fab">✏ 写简报</a>
 <script>
 async function loadIndex() {
   try {
     const res = await fetch('/api/index');
-    const list = await res.json();
+    const text = await res.text();
+    const clean = text.replace(/[\u201c\u201d\u300c\u300d]/g, '"').replace(/[\u2018\u2019]/g, "'");
+    const list = JSON.parse(clean);
     document.getElementById('loading').style.display = 'none';
-
-    if (!list.length) {
+    if (!Array.isArray(list) || !list.length) {
       document.getElementById('empty').style.display = 'block';
       return;
     }
-
     const ul = document.getElementById('list');
     ul.style.display = 'block';
     ul.innerHTML = list.map(item => {
       const d = item.date ? new Date(item.date + 'T12:00:00') : null;
       const dateStr = d ? d.toLocaleDateString('zh-CN', {month:'2-digit', day:'2-digit', weekday:'short'}) : item.date;
-      return `<a class="brief-item" href="/brief/${item.id}">
-        <div class="brief-date">
-          ${dateStr}<br>
-          ${item.vol ? `<span class="brief-vol">VOL.${item.vol}</span>` : ''}
-        </div>
+      return `<a class="brief-item" href="/brief.html?id=${item.id}">
+        <div class="brief-date">${dateStr}<br>${item.vol ? `<span class="brief-vol">VOL.${item.vol}</span>` : ''}</div>
         <div class="brief-headline">${item.headline || '（无标题）'}</div>
         <div class="brief-arrow">→</div>
       </a>`;
