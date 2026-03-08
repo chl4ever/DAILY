@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前线简报 Vol.01 · 2026-03-05</title>
+<meta property="og:title" content="前线简报 Vol.01 · 2026-03-05">
+<meta property="og:description" content="「和谈假新闻」触发市场拐点信号——AVGO用1000亿AI远景压过一切噪音">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+SC:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--ink:#0d0d0d;--paper:#f5f0e8;--paper-dark:#ede7d9;--red:#c0392b;--red-muted:#8b2a1f;--gold:#b8860b;--gray:#5a5a5a;--gray-light:#999;--divider:#c8bfaa;--green:#1a6b3a;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'Noto Serif SC',serif;font-size:15px;line-height:1.75;max-width:780px;margin:0 auto;padding:40px 24px 80px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23d4c9b0' opacity='0.35'/%3E%3C/svg%3E");}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gray);text-decoration:none;margin-bottom:20px;letter-spacing:0.08em;}
+.back-link:hover{color:var(--ink);}
+.masthead{border-top:4px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0 12px;margin-bottom:0;display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+.masthead-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.masthead-title span{color:var(--red);}
+.masthead-meta{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray);line-height:1.6;}
+.edition-bar{background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;padding:5px 12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:4px;}
+.edition-bar .etag{background:var(--red);color:white;padding:1px 7px;font-size:9px;}
+.summary-box{border:1.5px solid var(--ink);padding:20px 22px;margin-bottom:28px;position:relative;background:white;}
+.summary-box::before{content:'摘要';position:absolute;top:-10px;left:16px;background:white;padding:0 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--gray);border:1px solid var(--ink);}
+.summary-headline{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;line-height:1.35;margin-bottom:12px;color:var(--ink);}
+.summary-body{font-size:13.5px;color:#333;line-height:1.85;}
+.signal-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--divider);border:1px solid var(--divider);margin-bottom:28px;}
+.signal-card{background:var(--paper);padding:12px 14px;text-align:center;}
+.signal-card .lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--gray-light);display:block;margin-bottom:3px;}
+.signal-card .val{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;line-height:1;display:block;}
+.signal-card .sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray);margin-top:2px;display:block;}
+.up{color:var(--green);}.dn{color:var(--red);}.nt{color:var(--gold);}
+.tracker{border:1px solid var(--divider);padding:14px 18px;margin-bottom:22px;background:var(--paper-dark);}
+.tracker-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--gray);margin-bottom:10px;}
+.tracker-bars{display:flex;align-items:flex-end;gap:8px;height:54px;}
+.tracker-day{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.tracker-day .bar{width:100%;background:var(--red);}
+.tracker-day .dlbl{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray);}
+.tracker-day .cnt{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--red);}
+.tracker-note{font-size:12px;color:var(--gray);margin-top:8px;font-style:italic;}
+.section{margin-bottom:28px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:7px;border-bottom:2px solid var(--ink);}
+.s-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray-light);letter-spacing:0.1em;}
+.s-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);flex:1;}
+.s-tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:2px 7px;border:1px solid;}
+.tag-r{color:var(--red);border-color:var(--red);}.tag-g{color:var(--green);border-color:var(--green);}.tag-o{color:var(--gold);border-color:var(--gold);}.tag-n{color:var(--gray);border-color:var(--gray);}
+.earn-card{border:1.5px solid var(--ink);margin-bottom:16px;background:white;}
+.earn-hdr{background:var(--ink);color:var(--paper);padding:9px 14px;display:flex;justify-content:space-between;align-items:center;}
+.earn-hdr .co{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;}
+.earn-hdr .verdict{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7fff7f;letter-spacing:0.08em;}
+.earn-grid{display:grid;grid-template-columns:repeat(2,1fr);}
+.earn-metric{padding:10px 12px;border-right:1px solid var(--divider);border-bottom:1px solid var(--divider);}
+.earn-metric:nth-child(2n){border-right:none;}
+.earn-metric .ml{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray-light);letter-spacing:0.08em;display:block;margin-bottom:2px;}
+.earn-metric .mv{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;display:block;}
+.earn-metric .ms{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--green);display:block;}
+.earn-note{padding:10px 14px;font-size:13px;color:#444;border-top:1px solid var(--divider);line-height:1.75;}
+.item{margin-bottom:14px;padding-left:14px;border-left:3px solid var(--divider);}
+.item.hot{border-left-color:var(--red);}.item.positive{border-left-color:var(--green);}.item.neutral{border-left-color:var(--gold);}.item.dark{border-left-color:var(--ink);}
+.item-title{font-weight:700;font-size:14px;margin-bottom:3px;}
+.item-body{font-size:13px;color:#3a3a3a;line-height:1.8;}
+.qa-item{margin-bottom:18px;}
+.qa-q{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;margin-bottom:5px;display:flex;gap:8px;align-items:flex-start;}
+.qa-q::before{content:'Q';font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--ink);color:var(--paper);padding:2px 5px;flex-shrink:0;margin-top:2px;}
+.qa-a{font-size:13px;color:#3a3a3a;line-height:1.85;padding-left:26px;border-left:1px dashed var(--divider);margin-left:13px;}
+.cal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cal-sec-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--gray);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--divider);}
+.cal-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;}
+.cal-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray-light);white-space:nowrap;padding-top:2px;min-width:32px;}
+.cal-text{color:#333;line-height:1.55;}
+.cal-stars{font-size:9px;color:var(--gold);white-space:nowrap;}
+.rule-h{border:none;border-top:1px solid var(--divider);margin:20px 0;}
+.rule-thick{border:none;border-top:2px solid var(--ink);margin:26px 0;}
+.footer{margin-top:48px;padding-top:14px;border-top:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.footer-brand{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--gray);}
+.footer-brand span{color:var(--red);}
+.footer-disc{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray-light);text-align:right;}
+@media(max-width:600px){body{padding:24px 16px 40px;}.masthead{flex-direction:column;gap:6px;}.masthead-meta{text-align:left;}.signal-row{grid-template-columns:repeat(2,1fr);}.earn-grid{grid-template-columns:1fr;}.cal-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<a href="/" class="back-link">← 返回简报列表</a>
+<div class="masthead">
+  <div class="masthead-title">前线<span>简报</span></div>
+  <div class="masthead-meta">Vol.01 · 2026年3月5日周四<br>美东时间 盘前版<br><span style="color:var(--red);font-weight:600;">中东战争第六日 · 盘前版</span></div>
+</div>
+<div class="edition-bar">
+  <span>FRONTLINE BRIEF · DAILY MARKET INTELLIGENCE</span>
+  <span class="etag">⚡ BREAKING</span>
+  <span>VIX 21.0 · $75 · 黄金 $5,167</span>
+</div><div class="summary-box">
+  <div class="summary-headline">「和谈假新闻」触发市场拐点信号——AVGO用1000亿AI远景压过一切噪音</div>
+  <div class="summary-body">盘前，《纽约时报》传出美伊和谈消息，四大指数瞬间转涨，高Beta股票与比特币相关标的猛烈反弹——随后以色列方面否认，但<strong>市场未回吐涨幅</strong>。这个细节是今日最重要的信号：市场对坏消息的边际敏感度正在下降，情绪拐点可能已悄然到来。VIX收于21，从峰值回落，印证了这一判断。<br><br>夜间最重磅事件是 <strong>Broadcom（AVGO）</strong> 财报：Q1营收+29%、AI营收+106%、Q2指引220亿美元大幅超预期，更祭出「2027年AI芯片收入超1000亿美元」的核弹级前瞻，彻底打消「AI资本开支见顶」的最大市场隐忧。盘后涨近5%。与此同时，Anthropic CEO公布ARR约190亿美元（数周前还是140亿），Claude过去一周在美国下载量约为1月的20倍——AI需求侧数据同步验证。<br><br>宏观层面，ADP超预期 + EIA原油储备增加，6月降息概率下行，美元指数小跌，黄金继续充当高Beta品种狂飙。周五非农是近期最大风险事件。</div>
+</div><div class="signal-row"><div class="signal-card">
+  <span class="lbl">VIX 恐慌指数</span>
+  <span class="val nt">21.0</span>
+  <span class="sub">↓ 峰值回落 情绪改善</span>
+</div><div class="signal-card">
+  <span class="lbl">WTI 原油</span>
+  <span class="val dn">$75</span>
+  <span class="sub">↓ 较峰值回落 Bessent干预</span>
+</div><div class="signal-card">
+  <span class="lbl">黄金</span>
+  <span class="val up">$5,167</span>
+  <span class="sub">↑ 本轮已成高Beta品种</span>
+</div><div class="signal-card">
+  <span class="lbl">比特币</span>
+  <span class="val up">$71,400</span>
+  <span class="sub">↑ +5% 避险叙事强化</span>
+</div></div><div class="tracker">
+  <div class="tracker-title">▌ 自建指标 · 每日导D消耗量追踪</div>
+  <div class="tracker-bars"><div class="tracker-day">
+  <div class="cnt">350</div>
+  <div class="bar" style="height:50px;opacity:1.0;"></div>
+  <div class="dlbl">D1</div>
+</div><div class="tracker-day">
+  <div class="cnt">175</div>
+  <div class="bar" style="height:25px;opacity:0.85;"></div>
+  <div class="dlbl">D2</div>
+</div><div class="tracker-day">
+  <div class="cnt">120</div>
+  <div class="bar" style="height:17px;opacity:0.7;"></div>
+  <div class="dlbl">D3</div>
+</div><div class="tracker-day">
+  <div class="cnt">50</div>
+  <div class="bar" style="height:7px;opacity:0.55;"></div>
+  <div class="dlbl">D4</div>
+</div></div>
+  <div class="tracker-note">消耗量呈指数级衰减（350→50），显示伊朗防空体系正被系统性削弱。历史上类似的消耗曲线预示冲突进入尾声阶段。持续跟踪此指标作为地缘风险缓和的领先信号。</div>
+</div><hr class="rule-thick"><div class="section">
+<div class="section-hdr">
+  <span class="s-num">01</span>
+  <span class="s-title">重磅财报 · AVGO 验证AI硬件持续性</span>
+  <span class="s-tag tag-g">✦ 超预期</span>
+</div><div class="earn-card">
+  <div class="earn-hdr">
+    <div class="co">Broadcom Inc. <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#aaa;">AVGO · Q1 FY2026</span></div>
+    <div class="verdict">盘后 ▲ +4.75%</div>
+  </div>
+  <div class="earn-grid"><div class="earn-metric">
+  <span class="ml">总营收</span>
+  <span class="mv">$193亿</span>
+  <span class="ms">↑ +29% YoY · 超预期</span>
+</div><div class="earn-metric">
+  <span class="ml">AI 营收</span>
+  <span class="mv">$84亿</span>
+  <span class="ms">↑ +106% YoY · 翻倍超预期</span>
+</div><div class="earn-metric">
+  <span class="ml">调整后 EBITDA 利润率</span>
+  <span class="mv">68%</span>
+  <span class="ms">预期 67% · 毛利率担忧消除</span>
+</div><div class="earn-metric">
+  <span class="ml">Q2 营收指引</span>
+  <span class="mv">$220亿</span>
+  <span class="ms">预期 $204亿 · 大幅超预期</span>
+</div></div>
+  <div class="earn-note"><strong>为何利润率尤为重要：</strong>上季度大量投资者担忧Anthropic定制芯片订单（规模达100亿美元）会压低毛利率。68%的EBITDA利润率不仅守住了这条线，更证明定制化业务完全可以兼顾规模与利润率，打消了市场对AI芯片大客户商业模式的核心顾虑。同步宣布100亿美元新一轮股票回购。<br><br><strong>2027年AI芯片收入超1000亿美元</strong> — CEO Hock Tan电话会核弹声明，已对Anthropic、Meta、OpenAI等五家超大规模客户的定制加速器下一阶段部署有「清晰视线」（line of sight）。</div>
+</div><div class="item hot">
+  <div class="item-title">🔴 今日最佳交易逻辑：AEC铜缆 vs CPO光模块</div>
+  <div class="item-body">电话会上Hock Tan明确推崇<strong>直连铜缆（AEC）</strong>方案，盘后 CRDO +8%。同时他表示共封装光学（CPO）「不是今年，也许不是明年」，这是一个明确的板块旗帜信号：铜缆（CRDO）短期赢，CPO中期待验证。在AI基础设施资本开支持续加速的背景下，CRDO的技术路线得到了行业最权威的背书。</div>
+</div></div><hr class="rule-h"><div class="section">
+<div class="section-hdr">
+  <span class="s-num">02</span>
+  <span class="s-title">算力生态 · AI需求侧多点验证</span>
+  <span class="s-tag tag-g">✦ 积极</span>
+</div><div class="item positive">
+  <div class="item-title">Anthropic ARR 140亿→190亿美元，数周内暴增</div>
+  <div class="item-body">CEO Dario Amodei在TMT大会上披露ARR约<strong>190亿美元</strong>，数周前披露数字还是140亿。结合「Claude美国下载量过去一周约为1月20倍」「#QuitGPT运动在社交媒体迅速发酵」，两条同日出现不是巧合——<strong>用户迁移效应正在加速兑现为收入</strong>。母公司亚马逊 AMZN +4%。</div>
+</div><div class="item positive">
+  <div class="item-title">NBIS +13% · 获批建设首座千兆瓦级AI工厂</div>
+  <div class="item-body">Nebius获批建设旗下首座千兆瓦（GW）级人工智能工厂，成为本轮AI基础设施超级建设周期的最新实物印证。千兆瓦级规模意味着AI算力建设的量级已进入全新阶段。</div>
+</div><div class="item positive">
+  <div class="item-title">CRWV +8% · 与 Perplexity 达成战略合作</div>
+  <div class="item-body">CoreWeave与AI搜索引擎Perplexity签署协议，算力供应侧与应用侧的绑定持续深化。</div>
+</div></div><hr class="rule-h"><div class="section">
+<div class="section-hdr">
+  <span class="s-num">03</span>
+  <span class="s-title">商业化前沿 · Agentic浪潮加速落地</span>
+  <span class="s-tag tag-o">→ 观察</span>
+</div><div class="item positive">
+  <div class="item-title">SHOP +6% · Agentic商业化</div>
+  <div class="item-body">Shopify在投资者活动中深度讨论AI Agent商业机会，市场对电商Agentic场景落地预期快速升温。</div>
+</div><div class="item neutral">
+  <div class="item-title">OpenAI × TTD · 广告AI化</div>
+  <div class="item-body">OpenAI据报将与The Trade Desk展开合作，AI+程序化广告的商业化路径浮现，广告科技板块值得持续跟踪。IGV（企业软件ETF）继续修复，部分个股已月内翻正，板块内部分化显著——AI原生应用强于传统SaaS。</div>
+</div></div><hr class="rule-h"><div class="section">
+<div class="section-hdr">
+  <span class="s-num">04</span>
+  <span class="s-title">宏观与市场结构</span>
+  <span class="s-tag tag-r">⚠ 关注</span>
+</div><div class="item hot">
+  <div class="item-title">美元走软 + 黄金高Beta化</div>
+  <div class="item-body">美元指数下跌25个基点，此前战争初期的避险反弹势头停滞。黄金本轮走势已完全脱离传统「低波动避险」定义，呈现高Beta资产特征——既是通胀对冲，又是地缘溢价，还吸收了部分美元信用担忧。年内已涨超36%。</div>
+</div><div class="item hot">
+  <div class="item-title">ADP超预期 + EIA储备增加 → 6月降息概率下行</div>
+  <div class="item-body">ADP私营部门就业数据超预期，EIA原油储备增加（短期缓解能源通胀压力），两组数据合力压低6月降息概率。叠加油价上涨带来的通胀黏性，美联储的政策空间持续收窄。<strong>关键路径</strong>：明日非农 → 下周三CPI → 下下周五PCE，三连击将最终定价3月FOMC措辞基调。</div>
+</div><div class="item dark">
+  <div class="item-title">全球15%统一关税本周正式生效</div>
+  <div class="item-body">特朗普政府15%全球统一关税已生效，各国反制措施将在本月陆续落地。贸易战是被低估的慢性风险——对跨国企业供应链的冲击将在未来2-3个季度逐步显现在财报中。</div>
+</div></div><hr class="rule-h"><div class="section">
+<div class="section-hdr">
+  <span class="s-num">05</span>
+  <span class="s-title">地缘政治 · 战场与议场</span>
+  <span class="s-tag tag-r">⚠ 持续追踪</span>
+</div><div class="item hot">
+  <div class="item-title">美国国会否决限战法案 · 党派分裂53:47</div>
+  <div class="item-body">共和党议员以53票对47票否决了限制总统在未经国会授权情况下继续军事行动的法案，投票结果几乎完全按党派划分。前国务卿布林肯警告，持续战争可能使美国自身变得脆弱。这意味着<strong>战争的结束时间表完全取决于总统意志</strong>，而非国会博弈。</div>
+</div><div class="item neutral">
+  <div class="item-title">韩国：KOSPI一度反弹12%，救市规模令人印象深刻</div>
+  <div class="item-body">韩国金融监管机构承诺在市场波动加剧时实施<strong>100万亿韩元救市</strong>（相当于KOSPI日均交易额的40%）。类比大A：若以2万亿日均成交量×40%，约8000亿人民币，远超历年国家队操作规模（年初GJD减持ETF约4000亿量级）。韩国银行另提供97亿美元财政支持给中小企业。李总统同步打压房市、托举股市，政策决心相当明确。亚洲监管机构正在将市场维稳作为外交信号工具。</div>
+</div></div><hr class="rule-thick"><div class="section">
+  <div class="section-hdr">
+    <span class="s-num">Q&amp;A</span>
+    <span class="s-title">今日焦点 Q&amp;A</span>
+    <span class="s-tag tag-n">5问5答</span>
+  </div>
+  <div class="qa-item">
+  <div class="qa-q">AVGO「2027年AI芯片超1000亿美元」，可信度几何？</div>
+  <div class="qa-a">Hock Tan历史上的执行记录支撑其可信度，且五家超大规模客户的定制芯片路线图已经签约落地。但市场已开始关注2028年的增长持续性——英伟达估值倍数低于市场均值，折射的正是这个担忧。短期内AVGO的数字是真实的，关键是每个季度的实际兑现速度。</div>
+</div><div class="qa-item">
+  <div class="qa-q">「和谈假新闻」不回吐，代表底部确认了吗？</div>
+  <div class="qa-a">不能断言，但这是一个重要的情绪拐点信号。导D消耗量曲线（350→50）从数量上印证了冲突强度在系统性衰减。市场从「恐惧冲击」进入「消化阶段」是明确的，但真正的底部确认需要霍尔木兹实质性重开、或Bessent政策干预产生可见效果。VIX跌破18将是更强的信号。</div>
+</div><div class="qa-item">
+  <div class="qa-q">明日非农数据，怎么看？</div>
+  <div class="qa-a">「甜蜜区间」在8-12万，配合月率薪资+0.3%。数据过强（>15万）= 降息预期大幅推后 = 利率上行 = 高估值科技股受压；数据过弱（<5万）= 衰退叙事复燃 = risk-off。当前市场已充分消化「更晚降息」预期，强数据的边际冲击可能有限，而弱数据将是真正的不确定性放大器。</div>
+</div><div class="qa-item">
+  <div class="qa-q">黄金为何变成高Beta品种？还能追吗？</div>
+  <div class="qa-a">本轮黄金集三重叙事于一身：地缘溢价（中东战争）+ 通胀对冲（油价 + 关税）+ 美元信用担忧（财政赤字扩张）。这是历史上罕见的共振结构，推动黄金走出高波动的「进攻性防御」特征。但年内已涨36%，当前价位追入需要考虑「冲突缓和」的快速回调风险，更适合作为组合中的尾部风险对冲而非投机工具。</div>
+</div><div class="qa-item">
+  <div class="qa-q">CRDO 这波是短炒还是有逻辑支撑？</div>
+  <div class="qa-a">AVGO的直连铜缆背书是强逻辑，不是短炒。超大规模数据中心在当前阶段的互联方案，成本效益上AEC铜缆确实优于光模块，这个判断来自行业最权威的CEO。但需注意：Hock Tan的「CPO不是今年也许不是明年」并非否定CPO，而是给出时间表，这意味着CRDO的窗口期是清晰但有限的。</div>
+</div>
+</div>
+<hr class="rule-thick"><div class="section">
+  <div class="section-hdr">
+    <span class="s-num">CAL</span>
+    <span class="s-title">本周 &amp; 本月日历</span>
+    <span class="s-tag tag-n">📅 追踪</span>
+  </div>
+  <div class="cal-grid">
+    <div><div class="cal-sec-title">── 本周</div><div class="cal-item">
+  <span class="cal-date">今日盘后</span>
+  <div><div class="cal-text">MRVL Marvell Q4 FY2026财报，EPS预期$0.79，数据中心AI加速器需求为核心焦点</div><div class="cal-stars">★★★★★</div></div>
+</div><div class="cal-item">
+  <span class="cal-date">今日盘后</span>
+  <div><div class="cal-text">COST Costco Q2 FY2026财报，验证高端消费韧性</div><div class="cal-stars">★★★★</div></div>
+</div><div class="cal-item">
+  <span class="cal-date">3/6 周五</span>
+  <div><div class="cal-text">2月非农就业报告（NFP），甜蜜区间8-12万</div><div class="cal-stars">★★★★★</div></div>
+</div></div>
+    <div><div class="cal-sec-title">── 本月</div><div class="cal-item">
+  <span class="cal-date">3/9</span>
+  <div><div class="cal-text">ORCL Oracle财报 · 云与AI基础设施支出</div><div class="cal-stars">★★★★</div></div>
+</div><div class="cal-item">
+  <span class="cal-date">下周三</span>
+  <div><div class="cal-text">2月CPI — 油价传导效应首次显现</div><div class="cal-stars">★★★★★</div></div>
+</div><div class="cal-item">
+  <span class="cal-date">下下周五</span>
+  <div><div class="cal-text">PCE通胀数据 — 美联储最看重指标</div><div class="cal-stars">★★★★★</div></div>
+</div><div class="cal-item">
+  <span class="cal-date">3月内</span>
+  <div><div class="cal-text">新任美联储主席人选公布，利率市场将剧烈重新定价</div><div class="cal-stars">★★★★★</div></div>
+</div><div class="cal-item">
+  <span class="cal-date">4/5</span>
+  <div><div class="cal-text">OPEC+下次会议</div><div class="cal-stars">★★★★</div></div>
+</div></div>
+  </div>
+</div><div class="footer">
+  <div class="footer-brand">前线<span>简报</span> · FRONTLINE BRIEF</div>
+  <div class="footer-disc">本报告仅供参考，不构成投资建议<br>数据截至 2026-03-05 美东时间盘前</div>
+</div>
+</body>
+</html>
