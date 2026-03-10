@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前线简报 Vol.02 · 2026-03-10</title>
+<meta property="og:title" content="前线简报 Vol.02 · 2026-03-10">
+<meta property="og:description" content="川普说战争快结束，但海峡还封着——空头93分位，CTA门槛就在眼前">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Serif+SC:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{
+  --ink:#0d0d0d;
+  --paper:#f5f0e8;
+  --paper-dark:#ede7d9;
+  --red:#c0392b;
+  --red-muted:#8b2a1f;
+  --gold:#b8860b;
+  --gray:#5a5a5a;
+  --gray-light:#999;
+  --divider:#c8bfaa;
+  --green:#1a6b3a;
+  --blue:#1a3a6b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Serif SC',serif;
+  font-size:15px;
+  line-height:1.75;
+  max-width:780px;
+  margin:0 auto;
+  padding:40px 24px 80px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23f5f0e8'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23d4c9b0' opacity='0.35'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none;}
+.back-link{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gray);margin-bottom:20px;letter-spacing:0.08em;border-bottom:1px solid transparent;transition:border-color 0.2s;}
+.back-link:hover{border-bottom-color:var(--gray);}
+
+/* MASTHEAD */
+.masthead{border-top:4px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 0 12px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+.masthead-title{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.masthead-title span{color:var(--red);}
+.masthead-meta{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray);line-height:1.7;}
+.masthead-meta .war-day{color:var(--red);font-weight:500;}
+
+/* EDITION BAR */
+.edition-bar{background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;padding:5px 12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:4px;}
+.etag{background:var(--red);color:white;padding:1px 7px;font-size:9px;letter-spacing:0.1em;}
+
+/* SIGNAL ROW */
+.signal-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--divider);border:1px solid var(--divider);margin-bottom:28px;}
+.signal-card{background:var(--paper);padding:10px 10px;text-align:center;}
+.signal-card .lbl{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:0.08em;color:var(--gray-light);display:block;margin-bottom:3px;}
+.signal-card .val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1;display:block;}
+.signal-card .sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--gray);margin-top:2px;display:block;}
+.up{color:var(--green);}.dn{color:var(--red);}.nt{color:var(--gold);}
+
+/* WAR STATUS BAR */
+.war-bar{border:1.5px solid var(--red);background:#fff8f7;padding:12px 16px;margin-bottom:22px;display:flex;gap:24px;flex-wrap:wrap;}
+.war-stat{text-align:center;flex:1;min-width:80px;}
+.war-stat .wlbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--gray-light);display:block;margin-bottom:2px;}
+.war-stat .wval{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--red);line-height:1;display:block;}
+.war-stat .wsub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray);display:block;margin-top:2px;}
+
+/* SUMMARY */
+.summary-box{border:1.5px solid var(--ink);padding:20px 22px;margin-bottom:28px;position:relative;background:white;}
+.summary-box::before{content:'摘要';position:absolute;top:-10px;left:16px;background:white;padding:0 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--gray);border:1px solid var(--ink);}
+.summary-headline{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;line-height:1.35;margin-bottom:12px;}
+.summary-body{font-size:13.5px;color:#333;line-height:1.9;}
+.summary-body p{margin-bottom:10px;}
+.summary-body p:last-child{margin-bottom:0;}
+.signal-alert{background:var(--ink);color:var(--paper);padding:8px 14px;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.05em;line-height:1.6;}
+.signal-alert strong{color:#ffd700;}
+
+/* SECTIONS */
+.section{margin-bottom:28px;}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:7px;border-bottom:2px solid var(--ink);}
+.s-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray-light);letter-spacing:0.1em;}
+.s-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);flex:1;}
+.s-tag{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:2px 7px;border:1px solid;white-space:nowrap;}
+.tag-r{color:var(--red);border-color:var(--red);}
+.tag-g{color:var(--green);border-color:var(--green);}
+.tag-o{color:var(--gold);border-color:var(--gold);}
+.tag-n{color:var(--gray);border-color:var(--gray);}
+.tag-b{color:var(--blue);border-color:var(--blue);}
+
+/* ITEMS */
+.item{margin-bottom:14px;padding-left:14px;border-left:3px solid var(--divider);}
+.item.hot{border-left-color:var(--red);}
+.item.positive{border-left-color:var(--green);}
+.item.neutral{border-left-color:var(--gold);}
+.item.dark{border-left-color:var(--ink);}
+.item.blue{border-left-color:var(--blue);}
+.item-title{font-weight:700;font-size:14px;margin-bottom:4px;}
+.item-body{font-size:13px;color:#3a3a3a;line-height:1.85;}
+
+/* POSITION TABLE */
+.pos-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px;}
+.pos-table th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--gray-light);text-align:left;padding:4px 8px;border-bottom:1px solid var(--divider);background:var(--paper-dark);}
+.pos-table td{padding:7px 8px;border-bottom:1px solid var(--divider);vertical-align:top;}
+.pos-table tr:last-child td{border-bottom:none;}
+.pos-table .mono{font-family:'IBM Plex Mono',monospace;font-size:11px;}
+.pos-table .warn{color:var(--red);font-weight:700;}
+.pos-table .ok{color:var(--green);}
+
+/* PERF GRID */
+.perf-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+.perf-item{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--paper-dark);border-left:3px solid var(--divider);font-size:13px;}
+.perf-item.up-item{border-left-color:var(--green);}
+.perf-item.dn-item{border-left-color:var(--red);}
+.perf-name{font-family:'IBM Plex Mono',monospace;font-size:11px;}
+.perf-val{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;}
+
+/* Q&A */
+.qa-item{margin-bottom:20px;}
+.qa-q{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;margin-bottom:6px;display:flex;gap:8px;align-items:flex-start;}
+.qa-q::before{content:'Q';font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--ink);color:var(--paper);padding:2px 5px;flex-shrink:0;margin-top:2px;}
+.qa-a{font-size:13px;color:#3a3a3a;line-height:1.9;padding-left:26px;border-left:1px dashed var(--divider);margin-left:13px;}
+
+/* CALENDAR */
+.cal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cal-sec-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--gray);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--divider);}
+.cal-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;}
+.cal-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray-light);white-space:nowrap;padding-top:2px;min-width:36px;}
+.cal-text{color:#333;line-height:1.55;}
+.cal-stars{font-size:9px;color:var(--gold);white-space:nowrap;}
+.cal-today{background:var(--red);color:white;padding:0 4px;font-size:9px;font-family:'IBM Plex Mono',monospace;vertical-align:middle;margin-left:4px;}
+
+/* RULES */
+.rule-h{border:none;border-top:1px solid var(--divider);margin:20px 0;}
+.rule-thick{border:none;border-top:2px solid var(--ink);margin:26px 0;}
+
+/* FOOTER */
+.footer{margin-top:48px;padding-top:14px;border-top:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.footer-brand{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--gray);}
+.footer-brand span{color:var(--red);}
+.footer-disc{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--gray-light);text-align:right;line-height:1.6;}
+
+@media(max-width:600px){
+  body{padding:24px 16px 40px;}
+  .masthead{flex-direction:column;gap:6px;}
+  .masthead-meta{text-align:left;}
+  .signal-row{grid-template-columns:repeat(3,1fr);}
+  .war-bar{gap:12px;}
+  .cal-grid{grid-template-columns:1fr;}
+  .perf-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<a href="/" class="back-link">← 返回简报列表</a>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-title">前线<span>简报</span></div>
+  <div class="masthead-meta">
+    Vol.02 · 2026年3月10日 周二<br>
+    美东时间 盘前版<br>
+    <span class="war-day">⚔ 中东战争第11天 · 海峡封锁第9天</span>
+  </div>
+</div>
+
+<div class="edition-bar">
+  <span>FRONTLINE BRIEF · DAILY MARKET INTELLIGENCE</span>
+  <span class="etag">⚡ WAR DAY 11</span>
+  <span>VIX 25.50 · Brent ~$90 · Gold $5,139 · BTC $69,200</span>
+</div>
+
+<!-- WAR STATUS -->
+<div class="war-bar">
+  <div class="war-stat">
+    <span class="wlbl">冲突天数</span>
+    <span class="wval">11</span>
+    <span class="wsub">自2/28起</span>
+  </div>
+  <div class="war-stat">
+    <span class="wlbl">海峡封锁</span>
+    <span class="wval">9</span>
+    <span class="wsub">天 · 流量≈0</span>
+  </div>
+  <div class="war-stat">
+    <span class="wlbl">VIX</span>
+    <span class="wval">25.5</span>
+    <span class="wsub">↓ 从峰值回落</span>
+  </div>
+  <div class="war-stat">
+    <span class="wlbl">Brent原油</span>
+    <span class="wval">~$90</span>
+    <span class="wsub">↓ 从$119回落</span>
+  </div>
+  <div class="war-stat">
+    <span class="wlbl">和谈信号</span>
+    <span class="wval">×2</span>
+    <span class="wsub">NYT + 川普CBS</span>
+  </div>
+</div>
+
+<!-- SIGNAL ROW -->
+<div class="signal-row">
+  <div class="signal-card">
+    <span class="lbl">S&P 500</span>
+    <span class="val up">6,796</span>
+    <span class="sub">3/9收盘 ▲+0.83%</span>
+  </div>
+  <div class="signal-card">
+    <span class="lbl">纳斯达克</span>
+    <span class="val up">22,696</span>
+    <span class="sub">▲ +1.38%</span>
+  </div>
+  <div class="signal-card">
+    <span class="lbl">道琼斯</span>
+    <span class="val up">47,741</span>
+    <span class="sub">▲ +0.50%</span>
+  </div>
+  <div class="signal-card">
+    <span class="lbl">黄金现货</span>
+    <span class="val up">$5,139</span>
+    <span class="sub">▲ +0.70% 今晨</span>
+  </div>
+  <div class="signal-card">
+    <span class="lbl">10Y美债</span>
+    <span class="val nt">4.14%</span>
+    <span class="sub">↓ 五日连升后止步</span>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary-box">
+  <div class="summary-headline">川普说"战争基本完成"——市场信了，但海峡还封着</div>
+  <div class="summary-body">
+    <p>这是美方第二次释放和谈意图。第一次是上周三《纽约时报》的消息，昨日（3/9）来自川普本人向CBS的直接表态："战争很完整，基本完成"，军事进度"远超"原定4至5周时间表。美股从盘中重挫完成惊天逆转——道指一度跌近900点，最终收涨239点；S&P 500收涨0.83%，纳指劲升1.38%。VIX从峰值回落至25.5。</p>
+    <p>但立场仍有反复。盘后股指小幅回吐，原油依然维持反弹态势。IRGC随即将川普表态斥为"无稽之谈"，并重申封锁意志。双边目前都表现出保护海峡通航的意愿，大量船只在海峡两侧锚泊等待。</p>
+    <p><strong>今日核心事件：</strong>Oracle（ORCL）今晚盘后发布Q3 FY2026财报，是本周AI基础设施叙事最重要的企业验证。明晨8:30，2月CPI公布——这是一份"战前数据"，但核心CPI若意外突破2.8%，将触发滞胀连锁定价。</p>
+  </div>
+  <div class="signal-alert">
+    <strong>⚡ 真正的去风险信号应是：</strong>油轮AIS信号重新出现在海峡内 · 或美国宣布正式护航行动启动
+  </div>
+</div>
+
+<hr class="rule-thick">
+
+<!-- SECTION 1: GEOPOLITICS -->
+<div class="section">
+  <div class="section-hdr">
+    <span class="s-num">01</span>
+    <span class="s-title">地缘政治 · 战场与议场</span>
+    <span class="s-tag tag-r">⚠ 持续追踪</span>
+  </div>
+
+  <div class="item hot">
+    <div class="item-title">格雷厄姆发声——外交降级信号的最强背书</div>
+    <div class="item-body">参议员林赛·格雷厄姆（Lindsey Graham）公开呼吁战争降级。此人是共和党外交鹰派的标志性人物，多次公开支持对伊朗动武，是国会内最有影响力的国防政策声音之一——连他都站出来喊降级，政治信号意义不可低估。关注地缘风险演变的投资者，可持续跟踪其X账号上的最新表态。</div>
+  </div>
+
+  <div class="item neutral">
+    <div class="item-title">霍尔木兹：双边保护意愿初现，但封锁成本极低</div>
+    <div class="item-body">伊朗并不需要海军封锁——仅靠在海峡附近实施数次廉价无人机打击，就足以令保险公司和航运公司判定通行风险不可承受。约150艘油轮目前锚泊在海峡两侧等待，每日约20%的全球石油供应持续受阻。即便停火信号持续强化，"最后一英里"的通航安全认证也需要时间。</div>
+  </div>
+
+  <div class="item dark">
+    <div class="item-title">战争持续性风险：消耗速度已不可持续</div>
+    <div class="item-body">美国防空系统的消耗速度与补充能力之间的不对称性极为悬殊——高成本防御系统对阵廉价伊朗导弹，战场数学不利于美方。这与川普"快结束"的表态并不矛盾，但也意味着任何拖延都将显著提高政治压力。</div>
+  </div>
+</div>
+
+<hr class="rule-h">
+
+<!-- SECTION 2: POSITION / FLOWS -->
+<div class="section">
+  <div class="section-hdr">
+    <span class="s-num">02</span>
+    <span class="s-title">仓位结构 · 市场处于最脆弱的临界状态</span>
+    <span class="s-tag tag-r">⚠ 极度敏感</span>
+  </div>
+
+  <div class="item hot">
+    <div class="item-title">四维仓位解析</div>
+    <div class="item-body">当前仓位是本轮危机中最焦灼的位置，多空双向波动风险均极高：</div>
+  </div>
+
+  <table class="pos-table">
+    <thead>
+      <tr>
+        <th>维度</th>
+        <th>数据</th>
+        <th>含义</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>空头拥挤度</strong></td>
+        <td class="mono warn">93分位（5年）</td>
+        <td>高盛Prime Brokerage数据，一旦利好落地，空头回补力度将极为剧烈</td>
+      </tr>
+      <tr>
+        <td><strong>CTA机械卖盘</strong></td>
+        <td class="mono warn">6763点</td>
+        <td>标普若跌破此位，触发趋势策略自动卖盘，流动性薄、杠杆高环境下跌幅将被放大</td>
+      </tr>
+      <tr>
+        <td><strong>机构活跃度</strong></td>
+        <td class="mono warn">3/10</td>
+        <td>昨日反弹由ETF被动买盘与空头回补主导，主动基金反而边际减仓</td>
+      </tr>
+      <tr>
+        <td><strong>MOC订单流</strong></td>
+        <td class="mono ok">观望为主</td>
+        <td>收盘竞价数据显示资金主要呈观望姿态，而非系统性撤离——区别"恐慌"与"等待"的关键细节</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="item neutral">
+    <div class="item-title">结论：流动性弱、盘口浅、杠杆率极高</div>
+    <div class="item-body">往哪边的波动都会剧烈放大。空头回补若触发，反弹烈度可能远超预期；若跌破6763，CTA卖盘叠加去杠杆将形成踩踏。当前不是判断方向的时机，是管理波动的时机。</div>
+  </div>
+</div>
+
+<hr class="rule-h">
+
+<!-- SECTION 3: SECTOR SCAN -->
+<div class="section">
+  <div class="section-hdr">
+    <span class="s-num">03</span>
+    <span class="s-title">板块扫描 · 3/9收盘表现</span>
+    <span class="s-tag tag-g">存储+光通信领跑</span>
+  </div>
+
+  <div class="item positive">
+    <div class="item-title">最强主线：存储与光通信——部分由指数调整催化</div>
+    <div class="item-body">SanDisk（分拆后独立上市）大涨<strong>+11.6%</strong>，位居标普500当日涨幅榜首；存储相关整体+7%，光通信板块+6.6%，谷歌AI基础设施相关+6.2%。需注意：部分涨幅由周五指数调整机械性推动，基本面驱动与指数驱动应加以区分。</div>
+  </div>
+
+  <div class="perf-grid">
+    <div class="perf-item up-item"><span class="perf-name">SanDisk</span><span class="perf-val up">+11.6%</span></div>
+    <div class="perf-item up-item"><span class="perf-name">Lumentum（指数调整）</span><span class="perf-val up">+14.7%</span></div>
+    <div class="perf-item up-item"><span class="perf-name">存储板块整体</span><span class="perf-val up">+7.0%</span></div>
+    <div class="perf-item up-item"><span class="perf-name">Vertiv（指数调整）</span><span class="perf-val up">+9.3%</span></div>
+    <div class="perf-item up-item"><span class="perf-name">光通信板块</span><span class="perf-val up">+6.6%</span></div>
+    <div class="perf-item up-item"><span class="perf-name">Coherent（指数调整）</span><span class="perf-val up">+7.0%</span></div>
+    <div class="perf-item up-item"><span class="perf-name">谷歌AI基础设施</span><span class="perf-val up">+6.2%</span></div>
+    <div class="perf-item up-item"><span class="perf-name">EchoStar（指数调整）</span><span class="perf-val up">+3.5%</span></div>
+  </div>
+
+  <div class="item neutral">
+    <div class="item-title">反弹结构：动量与成长领跑，等权与价值滞涨</div>
+    <div class="item-body">风格分化明显——动量因子MTUM <strong>+2.4%</strong>、成长ETF VUG <strong>+1.3%</strong>，远超价值VTV仅+0.2%、等权RSP仅+0.3%。这是典型的"流动性驱动、空头回补型"反弹特征，而非基本面驱动的全面修复。科技XLK +1.8%领涨，Mag 7全线上涨，谷歌2027年预期PE已不足20倍。</div>
+  </div>
+
+  <div class="item neutral">
+    <div class="item-title">软件内部分化持续 · 云消耗相关强势</div>
+    <div class="item-body">Figma <strong>+5%</strong> vs. Salesforce <strong>-1.5%</strong>，方向相反。云安全Cloudflare +3%，云消耗相关个股整体强劲：MongoDB +50bps、Snowflake +1.3%、Datadog +2.3%。摩根士丹利与花旗均将AVGO列为当前首选；多家投行在ORCL财报发布前下调目标价，预期已相对保守，为超预期创造了空间。</div>
+  </div>
+
+  <div class="item hot">
+    <div class="item-title">受压板块：金融 -2%、航空 -3~5%、美妆 -2~8%</div>
+    <div class="item-body">金融板块年内已累跌10%；航空股全线承压（油价直接传导）；美妆板块面临高油价→原料成本↑、运输成本↑、可支配收入↓的三重打击，ELF Beauty单日跌8%。</div>
+  </div>
+</div>
+
+<hr class="rule-h">
+
+<!-- SECTION 4: MACRO -->
+<div class="section">
+  <div class="section-hdr">
+    <span class="s-num">04</span>
+    <span class="s-title">宏观信号 · 盈利下修与CPI前瞻</span>
+    <span class="s-tag tag-o">→ 滞胀压力累积</span>
+  </div>
+
+  <div class="item dark">
+    <div class="item-title">FactSet盈利下修预警（3/6发布）</div>
+    <div class="item-body">截至去年12月31日，市场对标普500一季度盈利同比增速预期为<strong>12.7%</strong>；随着业绩季推进，当前已下修至<strong>11.5%</strong>。除科技与材料板块外，其余九个板块均遭下调。重要提示：这份预警反映的仍是能源危机爆发前的基本面恶化——战争冲击尚未计入，下修远未结束。</div>
+  </div>
+
+  <div class="item neutral">
+    <div class="item-title">明日CPI（8:30 ET）— 一份"战前数据"的边际意义</div>
+    <div class="item-body">2月CPI显然不含任何3月战争影响，市场预期同比约2.5%（1月为2.4%），核心CPI同样维持2.5%附近。解读框架：若数据符合预期或略高，市场消化相对平稳；若意外大幅超预期，将在"高油价+弱就业（2月NFP意外-9.2万）"的滞胀背景下触发连锁定价——降息预期被推后、实际利率上行、高估值科技股承压，三重压力同步释放。<strong>核心CPI是否突破2.8%，是明日的关键观测阈值。</strong></div>
+  </div>
+</div>
+
+<hr class="rule-h">
+
+<!-- SECTION 5: ORCL PREVIEW -->
+<div class="section">
+  <div class="section-hdr">
+    <span class="s-num">05</span>
+    <span class="s-title">今日焦点财报 · ORCL Q3 FY2026（盘后）</span>
+    <span class="s-tag tag-b">AI基础设施验证</span>
+  </div>
+
+  <div class="item blue">
+    <div class="item-title">核心看点：OCI增速是否继续加速</div>
+    <div class="item-body">连续四季加速：Q3 FY25的49% → Q4的52% → Q1 FY26的55% → Q2的68%。管理层已给出全年77%的目标，意味着下半年需维持85%以上增速。若Q3继续加速，是真正的超预期核弹；若掉头，则Stargate扩张谈判受阻传言有实质影响。市场预期：EPS $1.71（YoY +16.3%），营收169.2亿美元（YoY +20%）。</div>
+  </div>
+
+  <div class="item neutral">
+    <div class="item-title">次核心：RPO $5230亿的转化质量</div>
+    <div class="item-body">未来12个月可确认部分YoY +40%——这个数字的质量决定收入"能见度"是否真实可信。多家投行财报前下调目标价，预期相对保守，为超预期创造了空间。年内股价已跌逾20%，在战争背景下AI基础设施叙事若得到验证，反弹空间值得关注。</div>
+  </div>
+</div>
+
+<hr class="rule-thick">
+
+<!-- Q&A -->
+<div class="section">
+  <div class="section-hdr">
+    <span class="s-num">Q&A</span>
+    <span class="s-title">今日焦点 Q&A</span>
+    <span class="s-tag tag-n">5问5答</span>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">川普说"战争基本完成"，市场该信几分？</div>
+    <div class="qa-a">不宜全信，但也不该完全无视。川普已两度使用强烈措辞，与我们追踪的导弹消耗曲线一致——美以已建立对伊朗领空的有效控制权，伊朗弹道导弹库存大幅削减。但"战争快结束"≠"石油重开"：IRGC已确认霍尔木兹持续封闭，且伊朗采用无人机而非海军手段实施封锁，成本极低、极难被快速消除。真正的去风险信号应是：油轮AIS信号重新出现在海峡内，或美国宣布正式护航行动启动。</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">ORCL财报今晚最核心的一个数字是什么？</div>
+    <div class="qa-a">不是EPS，是OCI云基础设施季度收入增速。四季连续加速（49%→52%→55%→68%），全年目标77%，下半年需维持85%以上。若Q3继续加速即为超预期核弹；若增速掉头，则说明Stargate扩张谈判受阻传言有实质影响。RPO中未来12个月可确认部分YoY +40%，这个数字的质量同样关键。</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">2月CPI明天出炉，对市场的实际意义是什么？</div>
+    <div class="qa-a">这是一份"战前数据"，本身不含任何3月战争影响。真正的炸弹是：若核心CPI意外突破2.8%，在战争驱动的能源冲击叠加下，将彻底关闭3月FOMC降息窗口，并开始引发"滞胀→不能降息→经济硬着陆"的连锁定价。数据路径：明日CPI → 下周FOMC → 3月底PCE，三连击将最终定价今年的货币政策基调。</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">昨日反弹成色如何？能跟进吗？</div>
+    <div class="qa-a">反弹成色偏弱。机构活跃度仅为3/10，主动基金边际减仓，反弹由ETF被动买盘与93分位空头回补主导——这是典型的"挤空"而非"入场"。风格印证：动量MTUM +2.4%远超等权RSP +0.3%，基本面驱动的全面修复还未到来。唯一的好消息是MOC订单流显示资金在观望而非撤离。当前更适合管理波动，而非追涨。</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">此次战争对AI资本开支叙事的威胁有多大？</div>
+    <div class="qa-a">直接冲击有限，但间接传导路径值得警惕。AI超大规模资本开支已签约落地，短期不因油价而变动。但三条传导链需持续监控：①高通胀→美联储维持高利率→中小AI云用户支出边际收缩；②战争冲击未计入的盈利预警（FactSet已下修至11.5%，且尚未触底）将进一步压缩科技行业实际利润率；③今晚ORCL若给出谨慎Q4指引，将是AI基础设施建设周期"见顶担忧"重燃的最直接引线。</div>
+  </div>
+</div>
+
+<hr class="rule-thick">
+
+<!-- CALENDAR -->
+<div class="section">
+  <div class="section-hdr">
+    <span class="s-num">CAL</span>
+    <span class="s-title">本周 &amp; 本月日历</span>
+    <span class="s-tag tag-n">📅 追踪</span>
+  </div>
+  <div class="cal-grid">
+    <div>
+      <div class="cal-sec-title">── 本周</div>
+      <div class="cal-item">
+        <span class="cal-date">今晚</span>
+        <div>
+          <div class="cal-text"><strong>ORCL Q3 FY2026财报</strong><span class="cal-today">TODAY</span><br>OCI增速、RPO转化、Q4指引</div>
+          <div class="cal-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="cal-item">
+        <span class="cal-date">3/11</span>
+        <div>
+          <div class="cal-text"><strong>2月CPI（8:30 ET）</strong><span class="cal-today">TMRW</span><br>核心CPI 2.8%是关键阈值</div>
+          <div class="cal-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="cal-item">
+        <span class="cal-date">3/12</span>
+        <div>
+          <div class="cal-text">ADBE Adobe财报<br>软件板块AI化商业模式验证</div>
+          <div class="cal-stars">★★★★</div>
+        </div>
+      </div>
+      <div class="cal-item">
+        <span class="cal-date">全周</span>
+        <div>
+          <div class="cal-text">霍尔木兹通航信号<br>AIS信号 / 美国护航宣布 / IRGC声明</div>
+          <div class="cal-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="cal-sec-title">── 本月</div>
+      <div class="cal-item">
+        <span class="cal-date">3/16–19</span>
+        <div>
+          <div class="cal-text"><strong>Nvidia GTC</strong>（Jensen 3/16主旨）<br>Blackwell Ultra路线图；AI Agent基础设施</div>
+          <div class="cal-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="cal-item">
+        <span class="cal-date">3/18–19</span>
+        <div>
+          <div class="cal-text"><strong>FOMC议息会议</strong><br>按兵不动可能性>95%；点阵图如何应对滞胀两难</div>
+          <div class="cal-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="cal-item">
+        <span class="cal-date">3月内</span>
+        <div>
+          <div class="cal-text">新美联储主席人选公布<br>若提名鸽派，利率期货将剧烈重定价</div>
+          <div class="cal-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="cal-item">
+        <span class="cal-date">4/5</span>
+        <div>
+          <div class="cal-text">OPEC+会议<br>减产/增产决定将直接放大或缓解能源冲击</div>
+          <div class="cal-stars">★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-brand">前线<span>简报</span> · FRONTLINE BRIEF</div>
+  <div class="footer-disc">本报告仅供参考，不构成投资建议<br>数据截至 2026-03-10 美东时间盘前<br>Vol.02 · 中东战争第11天</div>
+</div>
+
+</body>
+</html>
