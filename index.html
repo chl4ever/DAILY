@@ -27,21 +27,33 @@ body{background:var(--paper);color:var(--ink);font-family:'Noto Serif SC',serif;
 .arrow{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--divider);transition:color 0.15s;}
 .brief-list{list-style:none;}
 .brief-item{border-bottom:1px solid var(--divider);padding:20px 0;display:grid;grid-template-columns:80px 1fr auto;gap:16px;align-items:start;text-decoration:none;color:var(--ink);}
+.brief-item:first-child{border-top:1px solid var(--divider);}
 .brief-item:hover .brief-headline{color:var(--red);}
 .brief-item:hover .arrow{color:var(--red);}
 .brief-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gray);line-height:1.5;padding-top:3px;}
 .brief-vol{font-size:9px;color:var(--gold);letter-spacing:0.1em;}
 .brief-headline{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;line-height:1.4;transition:color 0.15s;}
+.brief-subtitle{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gray);margin-top:4px;letter-spacing:0.03em;line-height:1.5;}
+.state-row{padding:28px 0;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:0.08em;border-top:1px solid var(--divider);}
+.dot{display:inline-block;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.15;}}
 .edit-fab{position:fixed;bottom:28px;right:28px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;padding:12px 22px;text-decoration:none;border:1px solid var(--red);}
-@media(max-width:600px){.hero{padding:32px 20px 24px;}.hero-title{font-size:38px;}.main{padding:32px 16px 80px;}.brief-item{grid-template-columns:60px 1fr 20px;gap:10px;}}
+@media(max-width:600px){
+  .hero{padding:32px 20px 24px;}
+  .hero-title{font-size:38px;}
+  .main{padding:32px 16px 80px;}
+  .brief-item{grid-template-columns:60px 1fr 20px;gap:10px;}
+}
 </style>
 </head>
 <body>
+
 <div class="hero">
   <div class="hero-title">前线<span>简报</span></div>
   <div class="hero-sub">FRONTLINE BRIEF · DAILY MARKET INTELLIGENCE</div>
   <div class="hero-desc">每日盘前深度市场简报。聚焦重磅业绩、地缘风险、AI算力与宏观路径。</div>
 </div>
+
 <div class="main">
 
   <div class="section-label">── 深度分析专题</div>
@@ -54,28 +66,108 @@ body{background:var(--paper);color:var(--ink);font-family:'Noto Serif SC',serif;
       </div>
       <div class="arrow">→</div>
     </a>
-    <!-- 新增专题：复制上面整个 <a class="analysis-item"> 块，改链接/标题/描述 -->
   </div>
 
   <div class="section-label">── 往期简报存档</div>
-  <ul class="brief-list">
-
-    <a class="brief-item" href="/brief-vol01.html">
-      <div class="brief-date">03/05 周四<br><span class="brief-vol">VOL.01</span></div>
-      <div class="brief-headline">「和谈假新闻」触发市场拐点信号——AVGO用1000亿AI远景压过一切噪音</div>
-      <div class="arrow">→</div>
-    </a>
-
-    <!-- 新增简报：复制上面 <a class="brief-item"> 块粘贴在这里，改文件名/日期/标题
-    <a class="brief-item" href="/brief-vol02.html">
-      <div class="brief-date">03/08 周日<br><span class="brief-vol">VOL.02</span></div>
-      <div class="brief-headline">标题写这里</div>
-      <div class="arrow">→</div>
-    </a>
-    -->
-
+  <ul class="brief-list" id="brief-list">
+    <li class="state-row"><span class="dot">▌</span>&nbsp; 正在加载简报列表...</li>
   </ul>
+
 </div>
+
 <a href="/edit.html" class="edit-fab">✏ 写简报</a>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+//  自动扫描：不需要手动维护列表
+//  只需上传 brief-vol03.html / brief-vol04.html ...
+//  首页会自动检测并展示，最新在最上方
+// ─────────────────────────────────────────────────────────────
+
+const WEEKDAYS = ['周日','周一','周二','周三','周四','周五','周六'];
+
+function pad(n){ return String(n).padStart(2,'0'); }
+
+function formatDate(s){
+  if(!s) return '';
+  try {
+    const d = new Date(s + 'T12:00:00');
+    return `${pad(d.getMonth()+1)}/${pad(d.getDate())} ${WEEKDAYS[d.getDay()]}`;
+  } catch(e){ return s; }
+}
+
+// 从 HTML 文本里提取我们想要的 meta
+function parseMeta(html, vol){
+  const p = new DOMParser();
+  const doc = p.parseFromString(html, 'text/html');
+
+  // og:description 是标题正文（我们在 brief 里这样设置的）
+  const ogDesc  = doc.querySelector('meta[property="og:description"]')?.getAttribute('content') || '';
+  const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content') || doc.title;
+
+  // 从 og:title 里取日期
+  const dateMatch = ogTitle.match(/(\d{4}-\d{2}-\d{2})/);
+  const dateStr   = dateMatch ? dateMatch[1] : '';
+
+  // 副标题：war-day 元素（Vol.02 有，Vol.01 没有也没关系）
+  const warDay = doc.querySelector('.war-day')?.textContent?.trim() || '';
+
+  // masthead-meta 里第一行文本作为 fallback subtitle
+  const mastheadMeta = doc.querySelector('.masthead-meta')?.textContent?.trim() || '';
+
+  return { vol, dateStr, headline: ogDesc || ogTitle, subtitle: warDay };
+}
+
+async function loadBriefs(){
+  const list = document.getElementById('brief-list');
+  const found = [];
+  let consecutive404 = 0;
+
+  for(let vol = 1; vol <= 99; vol++){
+    const url = `/brief-vol${pad(vol)}.html`;
+    try {
+      const res = await fetch(url);
+      if(!res.ok){
+        consecutive404++;
+        if(consecutive404 >= 2) break;
+        continue;
+      }
+      consecutive404 = 0;
+      const html = await res.text();
+      const meta = parseMeta(html, vol);
+      meta.url = url;
+      found.push(meta);
+    } catch(e){
+      consecutive404++;
+      if(consecutive404 >= 2) break;
+    }
+  }
+
+  list.innerHTML = '';
+
+  if(found.length === 0){
+    list.innerHTML = `<li class="state-row">暂无简报 — 上传第一篇后自动显示</li>`;
+    return;
+  }
+
+  // 最新的排最上面
+  [...found].reverse().forEach(b => {
+    const a = document.createElement('a');
+    a.className = 'brief-item';
+    a.href = b.url;
+    a.innerHTML = `
+      <div class="brief-date">${formatDate(b.dateStr)}<br><span class="brief-vol">VOL.${pad(b.vol)}</span></div>
+      <div>
+        <div class="brief-headline">${b.headline}</div>
+        ${b.subtitle ? `<div class="brief-subtitle">${b.subtitle}</div>` : ''}
+      </div>
+      <div class="arrow">→</div>
+    `;
+    list.appendChild(a);
+  });
+}
+
+loadBriefs();
+</script>
 </body>
 </html>
